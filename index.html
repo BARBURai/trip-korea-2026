@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0F172A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="קוריאה 2026">
+<title>🇰🇷 דרום קוריאה 2026 - הילה ורון</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-180.png">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg:#0B0F1A; --surface:#131829; --surface-2:#1A2038; --surface-3:#232A47; --border:#252B45;
+  --text:#F1F5F9; --text-dim:#94A3B8; --text-faint:#64748B;
+  --accent:#FF3B5C; --accent-soft:#FF3B5C22; --accent-2:#3B82F6;
+  --blue:#3B82F6; --green:#10B981; --amber:#F59E0B; --red:#EF4444; --purple:#8B5CF6;
+  --radius:14px; --radius-sm:10px; --transition:0.25s cubic-bezier(0.4,0,0.2,1);
+}
+html,body { background:var(--bg); color:var(--text); font-family:'Heebo',-apple-system,BlinkMacSystemFont,sans-serif; line-height:1.5; min-height:100vh; overscroll-behavior:none; -webkit-font-smoothing:antialiased; }
+body { padding:env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 74px) env(safe-area-inset-left); max-width:680px; margin:0 auto; position:relative; }
+.app-header { padding:16px 16px 8px; position:sticky; top:env(safe-area-inset-top); background:linear-gradient(180deg,var(--bg) 80%,transparent); z-index:50; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+.app-title { font-size:20px; font-weight:700; display:flex; align-items:center; gap:8px; }
+.app-subtitle { font-size:13px; color:var(--text-dim); margin-top:2px; }
+.countdown-pill { background:var(--accent-soft); color:var(--accent); padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:4px; margin-top:8px; }
+.view { display:none; padding:16px; animation:fadeIn 0.25s ease-out; }
+.view.active { display:block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; margin-bottom:12px; transition:transform var(--transition),border-color var(--transition); }
+.card:active { transform:scale(0.98); }
+.card-clickable { cursor:pointer; }
+.card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
+.card-title { font-size:16px; font-weight:600; color:var(--text); }
+.card-subtitle { font-size:13px; color:var(--text-dim); }
+.card-badge { background:var(--surface-2); color:var(--text-dim); padding:2px 8px; border-radius:6px; font-size:11px; font-weight:500; flex-shrink:0; }
+.timeline { position:relative; padding-right:24px; }
+.timeline::before { content:''; position:absolute; right:8px; top:10px; bottom:10px; width:1px; background:var(--border); }
+.timeline-item { position:relative; padding:12px 0; padding-right:16px; }
+.timeline-item::before { content:''; position:absolute; right:-21px; top:18px; width:10px; height:10px; border-radius:50%; background:var(--surface); border:2px solid var(--border); }
+.timeline-item.type-flight::before { border-color:var(--blue); background:var(--blue); }
+.timeline-item.type-hotel::before { border-color:var(--purple); background:var(--purple); }
+.timeline-item.type-food::before { border-color:var(--accent); background:var(--accent); }
+.timeline-item.type-sightseeing::before { border-color:var(--green); background:var(--green); }
+.timeline-item.type-car::before { border-color:var(--amber); background:var(--amber); }
+.timeline-item.type-rest::before { border-color:var(--text-faint); }
+.timeline-item.type-optional::before { border-color:var(--amber); background:transparent; }
+.timeline-time { font-size:12px; font-weight:600; color:var(--text-dim); margin-bottom:2px; font-variant-numeric:tabular-nums; }
+.timeline-content { font-size:14px; color:var(--text); line-height:1.45; }
+.timeline-tip { font-size:12px; color:var(--text-dim); margin-top:4px; padding:6px 8px; background:var(--surface-2); border-radius:6px; border-right:2px solid var(--accent-2); }
+.timeline-actions { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+.nav-btn-mini { background:var(--surface-2); color:var(--text); border:1px solid var(--border); padding:4px 10px; border-radius:6px; font-size:11px; font-family:inherit; text-decoration:none; display:inline-flex; align-items:center; gap:3px; cursor:pointer; }
+.nav-btn-mini.primary { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+.nav-btn-mini:active { transform:scale(0.95); }
+.note-box { background:var(--surface-2); border-radius:var(--radius-sm); padding:10px 12px; margin:4px 0; font-size:13px; line-height:1.5; color:var(--text-dim); }
+.note-box.critical { background:#3B1A1F; border-right:3px solid var(--red); color:#FCA5A5; }
+.note-box.warning { background:#3B2E14; border-right:3px solid var(--amber); color:#FCD34D; }
+.note-box.success { background:#0F2E1E; border-right:3px solid var(--green); color:#86EFAC; }
+.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); display:flex; justify-content:space-around; padding:8px 4px calc(8px + env(safe-area-inset-bottom)); max-width:680px; margin:0 auto; z-index:100; }
+.nav-btn { background:transparent; border:none; color:white; opacity:0.75; padding:8px 6px; font-size:10px; font-family:inherit; font-weight:600; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; border-radius:10px; transition:all var(--transition); flex:1; }
+.nav-btn svg { width:22px; height:22px; stroke-width:1.8; stroke:white; }
+.nav-btn.active { color:white; opacity:1; background:var(--accent); }
+.nav-btn.active svg { stroke:white; stroke-width:2.5; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:10px 14px; border-radius:var(--radius-sm); background:var(--surface-2); color:var(--text); border:1px solid var(--border); font-family:inherit; font-size:13px; font-weight:500; text-decoration:none; cursor:pointer; transition:all var(--transition); min-height:40px; }
+.btn:active { transform:scale(0.97); }
+.btn.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+.btn.secondary { background:var(--surface); }
+.btn.doc { background:#4C1D95; color:#E9D5FF; border-color:#6D28D9; }
+.btn-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.btn-row .btn { flex:1; min-width:110px; }
+.day-scroll { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding:4px 16px; margin:0 -16px 14px; }
+.day-scroll::-webkit-scrollbar { display:none; }
+.day-chip { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:8px 12px; flex-shrink:0; cursor:pointer; transition:all var(--transition); min-width:62px; text-align:center; }
+.day-chip.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.day-chip.today { border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft); }
+.day-chip-date { font-size:11px; color:var(--text-dim); font-weight:500; }
+.day-chip.active .day-chip-date, .day-chip.active .day-chip-day { color:#fff; }
+.day-chip-day { font-size:15px; font-weight:700; color:var(--text); margin-top:2px; }
+.search-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; color:var(--text); font-family:inherit; font-size:14px; width:100%; margin-bottom:12px; }
+.search-box:focus { outline:none; border-color:var(--accent); }
+.section-title { font-size:12px; font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.05em; margin:20px 0 10px; padding:0 4px; }
+.section-title:first-child { margin-top:4px; }
+.quick-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:16px; }
+.quick-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; cursor:pointer; transition:all var(--transition); display:flex; flex-direction:column; gap:6px; }
+.quick-card:active { transform:scale(0.97); }
+.quick-card .icon { font-size:22px; }
+.quick-card .label { font-size:13px; font-weight:600; color:var(--text); }
+.quick-card .sub { font-size:11px; color:var(--text-dim); }
+.hero { background:linear-gradient(135deg,var(--accent) 0%,#FF8A3C 100%); color:#fff; border-radius:var(--radius); padding:20px; margin-bottom:14px; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 20%,rgba(255,255,255,0.15),transparent 50%); }
+.hero-title { font-size:13px; font-weight:500; opacity:0.9; position:relative; }
+.hero-count { font-size:48px; font-weight:700; line-height:1; margin:8px 0 2px; font-variant-numeric:tabular-nums; position:relative; }
+.hero-sub { font-size:13px; opacity:0.92; position:relative; }
+.today-ribbon { background:var(--green); color:#fff; padding:12px 14px; border-radius:var(--radius); margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:10px; }
+.today-ribbon .today-label { font-size:11px; font-weight:600; opacity:0.9; text-transform:uppercase; letter-spacing:0.05em; }
+.today-ribbon .today-title { font-size:15px; font-weight:700; margin-top:2px; }
+.contact-list a { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:8px; color:var(--text); text-decoration:none; gap:10px; }
+.contact-list a:active { background:var(--surface-2); }
+.contact-list a.emergency { border-color:var(--red); background:#3B1A1F22; }
+.contact-name { flex:1; }
+.contact-name-main { font-size:14px; font-weight:500; color:var(--text); }
+.contact-name-note { font-size:11px; color:var(--text-dim); margin-top:1px; }
+.contact-phone-icon { background:var(--green); color:#fff; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+details { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:8px; overflow:hidden; }
+details summary { padding:12px 14px; cursor:pointer; font-size:14px; font-weight:500; display:flex; justify-content:space-between; align-items:center; list-style:none; }
+details summary::-webkit-details-marker { display:none; }
+details summary::after { content:'\2304'; transition:transform var(--transition); color:var(--text-dim); font-size:18px; }
+details[open] summary::after { transform:rotate(180deg); }
+details .details-body { padding:0 14px 14px; color:var(--text-dim); font-size:13px; line-height:1.6; }
+.phrase { display:grid; grid-template-columns:1fr auto; gap:10px; padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:8px; }
+.phrase-he { font-size:14px; font-weight:600; color:var(--text); }
+.phrase-kr { font-size:17px; color:var(--accent); font-weight:500; margin-top:4px; direction:ltr; text-align:left; }
+.phrase-romaji { font-size:12px; color:var(--text-dim); margin-top:2px; }
+.phrase-use { font-size:11px; color:var(--text-faint); margin-top:4px; }
+.phrase-btn { align-self:center; background:var(--surface-2); border:none; color:var(--text); width:40px; height:40px; border-radius:50%; font-size:18px; cursor:pointer; flex-shrink:0; }
+.checkbox-item { display:flex; align-items:center; padding:10px 12px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:6px; cursor:pointer; gap:10px; transition:all var(--transition); }
+.checkbox-item.done { opacity:0.5; text-decoration:line-through; }
+.checkbox-item input { accent-color:var(--accent); width:18px; height:18px; flex-shrink:0; }
+.checkbox-item label { flex:1; font-size:14px; cursor:pointer; }
+.flex-row { display:flex; gap:8px; align-items:center; }
+.space-between { justify-content:space-between; }
+.currency-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:14px; }
+.currency-rate-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); margin-bottom:14px; }
+.currency-rate-label { font-size:12px; color:var(--text-dim); }
+.currency-rate-value { font-size:14px; font-weight:600; color:var(--green); font-variant-numeric:tabular-nums; }
+.currency-rate-value.stale { color:var(--amber); }
+.currency-input-group { display:flex; align-items:center; gap:8px; margin-bottom:10px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; }
+.currency-input-group.active { border-color:var(--accent); }
+.currency-input-group label { font-size:12px; color:var(--text-dim); min-width:50px; }
+.currency-input { flex:1; background:transparent; border:none; color:var(--text); font-family:inherit; font-size:22px; font-weight:600; text-align:left; direction:ltr; font-variant-numeric:tabular-nums; outline:none; padding:0; min-width:0; -moz-appearance:textfield; }
+.currency-input::-webkit-outer-spin-button, .currency-input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+.currency-symbol { font-size:18px; color:var(--text-dim); font-weight:500; }
+.currency-swap { text-align:center; margin:6px 0; }
+.currency-swap button { background:var(--surface-2); border:1px solid var(--border); color:var(--text-dim); width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:18px; }
+.quick-amounts { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:12px; }
+.quick-amount-btn { background:var(--surface-2); border:1px solid var(--border); color:var(--text-dim); padding:10px 6px; border-radius:8px; font-size:12px; font-family:inherit; cursor:pointer; text-align:center; }
+.weather-card { background:linear-gradient(135deg,#1E293B 0%,#334155 100%); border-radius:var(--radius); padding:18px; margin-bottom:14px; color:#fff; position:relative; overflow:hidden; }
+.weather-location { font-size:13px; opacity:0.8; margin-bottom:4px; }
+.weather-current { display:flex; align-items:center; gap:14px; }
+.weather-icon { font-size:48px; line-height:1; }
+.weather-temp { font-size:42px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums; }
+.weather-desc { font-size:13px; opacity:0.85; margin-top:4px; }
+.weather-details { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.15); }
+.weather-detail { text-align:center; }
+.weather-detail-label { font-size:10px; opacity:0.7; text-transform:uppercase; letter-spacing:0.05em; }
+.weather-detail-value { font-size:14px; font-weight:600; margin-top:2px; }
+.weather-forecast { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; margin:0 -16px; padding:0 16px; }
+.weather-forecast::-webkit-scrollbar { display:none; }
+.forecast-day { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 10px; min-width:82px; text-align:center; flex-shrink:0; }
+.forecast-day-label { font-size:11px; color:var(--text-dim); margin-bottom:4px; }
+.forecast-day-icon { font-size:26px; margin:2px 0; }
+.forecast-day-temp { font-size:13px; color:var(--text); font-weight:600; }
+.forecast-day-temp .min { color:var(--text-dim); }
+.weather-loading { padding:20px; text-align:center; color:var(--text-dim); font-size:13px; }
+.booking-doc-btn { background:#4C1D95; color:#E9D5FF; border:1px solid #6D28D9; padding:8px 12px; border-radius:8px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
+.booking-doc-btn.empty { background:var(--surface-2); color:var(--text-faint); border-color:var(--border); border-style:dashed; }
+.chip-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.chip { background:var(--surface-2); color:var(--text-dim); padding:4px 10px; font-size:11px; border-radius:999px; border:1px solid var(--border); }
+.chip.important { background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+
+/* ============ NOTIFICATIONS / ALERTS ============ */
+.notif-btn { background:var(--surface-2); border:1px solid var(--border); color:var(--text); width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; position:relative; padding:0; }
+.notif-btn.enabled { background:var(--green); border-color:var(--green); color:#fff; }
+.notif-btn.denied { background:var(--surface-2); color:var(--text-faint); }
+.notif-btn .notif-count { position:absolute; top:-4px; right:-4px; background:var(--red); color:#fff; font-size:9px; font-weight:700; min-width:16px; height:16px; border-radius:8px; padding:0 4px; display:flex; align-items:center; justify-content:center; line-height:1; }
+
+.alert-banner { background:linear-gradient(135deg,var(--red) 0%,#DC2626 100%); color:#fff; border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; position:relative; }
+.alert-banner.warning { background:linear-gradient(135deg,#D97706 0%,#B45309 100%); }
+.alert-banner.info { background:linear-gradient(135deg,var(--blue) 0%,#2563EB 100%); }
+.alert-banner-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; opacity:0.9; margin-bottom:4px; }
+.alert-banner-body { font-size:14px; font-weight:600; line-height:1.4; }
+.alert-banner-sub { font-size:12px; opacity:0.9; margin-top:4px; }
+.alert-banner-action { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+.alert-banner-action a, .alert-banner-action button { background:rgba(255,255,255,0.2); color:#fff; border:1px solid rgba(255,255,255,0.3); padding:6px 12px; border-radius:8px; font-size:12px; font-family:inherit; text-decoration:none; cursor:pointer; display:inline-flex; align-items:center; gap:4px; }
+.alert-banner-action a:active, .alert-banner-action button:active { background:rgba(255,255,255,0.3); }
+.alert-dismiss { position:absolute; top:8px; left:8px; background:rgba(255,255,255,0.15); border:none; color:#fff; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:13px; padding:0; }
+
+.nav-btn-badge { position:absolute; top:4px; right:10px; background:var(--red); color:#fff; font-size:9px; font-weight:700; min-width:16px; height:16px; border-radius:8px; padding:0 4px; display:flex; align-items:center; justify-content:center; line-height:1; }
+.nav-btn { position:relative; }
+
+.notif-permission-prompt { background:var(--surface); border:1px solid var(--accent-2); border-radius:var(--radius); padding:14px; margin-bottom:14px; }
+.notif-permission-prompt .title { font-size:14px; font-weight:600; margin-bottom:4px; display:flex; align-items:center; gap:6px; }
+.notif-permission-prompt .sub { font-size:12px; color:var(--text-dim); line-height:1.5; }
+.notif-permission-prompt .actions { margin-top:10px; display:flex; gap:8px; }
+
+/* ============ SPLASH SCREEN ============ */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: splashShow 2.2s ease-in-out forwards;
+  pointer-events: none;
+}
+#splash.instant-hide { display: none; }
+#splash .splash-logo {
+  width: 220px;
+  max-width: 60vw;
+  height: auto;
+  opacity: 0;
+  transform: scale(0.85);
+  animation: splashLogo 1.8s ease-out forwards;
+}
+#splash .splash-subtitle {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1E3A5F;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: splashText 1.8s ease-out 0.3s forwards;
+  text-align: center;
+  line-height: 1.6;
+}
+#splash .splash-subtitle .route {
+  color: #64748B;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 2px;
+}
+@keyframes splashLogo {
+  0%   { opacity: 0; transform: scale(0.85); }
+  25%  { opacity: 1; transform: scale(1); }
+  80%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+@keyframes splashText {
+  0%   { opacity: 0; transform: translateY(8px); }
+  25%  { opacity: 1; transform: translateY(0); }
+  80%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(0); }
+}
+@keyframes splashShow {
+  0%, 85%  { opacity: 1; visibility: visible; }
+  100%     { opacity: 0; visibility: hidden; }
+}
+
+/* ============ HEADER CORNER LOGO ============ */
+.header-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;
+  padding: 3px;
+  object-fit: contain;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ============ BIGGER FONTS FOR BETTER READABILITY ============ */
+body { font-size: 16px !important; line-height: 1.55 !important; }
+
+/* Headers & titles */
+.app-title { font-size: 22px !important; }
+.app-subtitle { font-size: 14px !important; }
+.card-title { font-size: 18px !important; }
+.section-title { font-size: 14px !important; }
+
+/* Timeline / itinerary - users read here a lot */
+.timeline-time { font-size: 14px !important; }
+.timeline-content { font-size: 16px !important; line-height: 1.6 !important; }
+.timeline-tip { font-size: 14px !important; line-height: 1.55 !important; padding: 8px 10px !important; }
+
+/* Day chips */
+.day-chip-date { font-size: 13px !important; }
+.day-chip-day { font-size: 17px !important; }
+
+/* Buttons */
+.btn { font-size: 15px !important; padding: 12px 16px !important; min-height: 44px !important; }
+.btn-row .btn { min-width: 110px; }
+.nav-btn-mini { font-size: 13px !important; padding: 6px 12px !important; }
+
+/* Quick cards on home */
+.quick-card .label { font-size: 15px !important; }
+.quick-card .sub { font-size: 12px !important; }
+.quick-card .icon { font-size: 26px !important; }
+
+/* Hero / today ribbon */
+.hero-title { font-size: 14px !important; }
+.hero-sub { font-size: 14px !important; }
+.today-ribbon .today-label { font-size: 12px !important; }
+.today-ribbon .today-title { font-size: 17px !important; }
+
+/* Contact list */
+.contact-name-main { font-size: 16px !important; }
+.contact-name-note { font-size: 13px !important; }
+
+/* Details / accordions (tips, info) */
+details summary { font-size: 16px !important; padding: 14px 16px !important; }
+
+/* Phrases (Korean lookup - important for travel) */
+.phrase-he { font-size: 16px !important; }
+.phrase-kr { font-size: 20px !important; }
+.phrase-romaji { font-size: 14px !important; }
+.phrase-use { font-size: 13px !important; }
+.phrase-btn { font-size: 22px !important; width: 46px !important; height: 46px !important; }
+
+/* Checklist */
+.checkbox-item label { font-size: 16px !important; }
+
+/* Notes & alerts */
+.note-box { font-size: 15px !important; line-height: 1.6 !important; padding: 12px 14px !important; }
+
+/* Search input */
+.search-box { font-size: 16px !important; padding: 12px 16px !important; }
+</style>
+</head>
+<body>
+<div id="splash">
+  <img class="splash-logo" id="splashLogo" alt="Barbur Tours">
+  <div class="splash-subtitle">
+    🇰🇷 דרום קוריאה 2026
+    <div class="route">הילה ורון │ 17.6 - 1.7</div>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="flex-row space-between">
+    <div class="flex-row" style="gap:10px;align-items:center;">
+      <img class="header-logo" id="headerLogo" alt="Barbur Tours">
+      <div>
+        <div class="app-title">🇰🇷 דרום קוריאה</div>
+        <div class="app-subtitle">הילה ורון │ 17.6 - 1.7.2026</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <button id="notifBtn" class="notif-btn" onclick="toggleNotifications()" title="התראות">🔔</button>
+      <div id="headerCountdown" class="countdown-pill"></div>
+    </div>
+  </div>
+</header>
+
+<section class="view active" id="view-home">
+  <div id="alertsBanner"></div>
+  <div id="homeHero"></div>
+  <div class="section-title">גישה מהירה</div>
+  <div class="quick-grid">
+    <div class="quick-card" onclick="navigate('itinerary')"><div class="icon">📅</div><div class="label">יומן המסע</div><div class="sub">תוכנית מלאה 15 ימים</div></div>
+    <div class="quick-card" onclick="navigate('bookings')"><div class="icon">🎫</div><div class="label">הזמנות</div><div class="sub">טיסות, מלונות, רכבים</div></div>
+    <div class="quick-card" onclick="navigate('currency')"><div class="icon">💱</div><div class="label">ממיר מטבע</div><div class="sub">₪ ↔ ₩</div></div>
+    <div class="quick-card" onclick="navigate('weather')"><div class="icon">🌦️</div><div class="label">מזג אוויר</div><div class="sub">תחזית ליום</div></div>
+    <div class="quick-card" onclick="navigate('contacts')"><div class="icon">📞</div><div class="label">חירום וקשר</div><div class="sub">טלפונים חשובים</div></div>
+    <div class="quick-card" onclick="navigate('phrases')"><div class="icon">🗣️</div><div class="label">קוריאנית</div><div class="sub">משפטים שימושיים</div></div>
+  </div>
+  <div class="section-title">הכנות לפני הטיסה</div>
+  <div class="card card-clickable" onclick="navigate('prep')">
+    <div class="card-header"><div><div class="card-title">צ'קליסט הכנה</div><div class="card-subtitle" id="prepProgress">טוען...</div></div><div class="card-badge">פתח</div></div>
+  </div>
+  <div class="section-title">מידע שימושי</div>
+  <div class="quick-grid">
+    <div class="quick-card" onclick="navigate('apps')"><div class="icon">📱</div><div class="label">אפליקציות</div><div class="sub">חובה להוריד</div></div>
+    <div class="quick-card" onclick="navigate('tips')"><div class="icon">💡</div><div class="label">טיפים</div><div class="sub">כסף, SIM, T-money</div></div>
+  </div>
+</section>
+
+<section class="view" id="view-itinerary">
+  <div class="day-scroll" id="dayScroll"></div>
+  <div id="dayContent"></div>
+</section>
+
+<section class="view" id="view-bookings">
+  <div id="driveBanner"></div>
+  <div class="section-title">✈️ טיסות</div><div id="flightsList"></div>
+  <div class="section-title">🏨 מלונות</div><div id="hotelsList"></div>
+  <div class="section-title">🚗 רכבים</div><div id="carsList"></div>
+  <div class="section-title">🎤 כנס הילה</div><div id="conferenceList"></div>
+  <div class="section-title">📋 אישורי Booking.com נוספים</div><div id="extraVouchersList"></div>
+</section>
+
+<section class="view" id="view-currency">
+  <div class="section-title">💱 ממיר מטבע</div>
+  <div id="currencyBox"></div>
+</section>
+
+<section class="view" id="view-weather">
+  <div class="section-title">🌦️ מזג אוויר</div>
+  <div id="weatherContent"></div>
+</section>
+
+<section class="view" id="view-contacts">
+  <div class="section-title">🆘 חירום</div><div class="contact-list" id="emergencyList"></div>
+  <div class="section-title">📞 מלונות ורכבים</div><div class="contact-list" id="hotelContactList"></div>
+</section>
+
+<section class="view" id="view-phrases">
+  <input type="search" class="search-box" id="phraseSearch" placeholder="חפש משפט...">
+  <div id="phrasesList"></div>
+</section>
+
+<section class="view" id="view-prep">
+  <div class="section-title">🎯 צ'קליסט הכנה</div>
+  <div id="prepList"></div>
+</section>
+
+<section class="view" id="view-apps">
+  <div class="section-title">📱 אפליקציות להורדה</div>
+  <div id="appsList"></div>
+</section>
+
+<section class="view" id="view-tips">
+  <div class="section-title">💡 מידע שימושי</div>
+  <div id="tipsList"></div>
+</section>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-view="home" onclick="navigate('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12l9-9 9 9M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>בית</span>
+  </button>
+  <button class="nav-btn" data-view="itinerary" onclick="navigate('itinerary')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>יומן</span>
+  </button>
+  <button class="nav-btn" data-view="bookings" onclick="navigate('bookings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/><path d="M8 11l3 3 5-5"/></svg>
+    <span>הזמנות</span>
+  </button>
+  <button class="nav-btn" data-view="currency" onclick="navigate('currency')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+    <span>מטבע</span>
+  </button>
+  <button class="nav-btn" data-view="contacts" onclick="navigate('contacts')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg>
+    <span>חירום</span>
+  </button>
+</nav>
+
+<script>
+const TRIP = {
+  startDate: '2026-06-17',
+  endDate: '2026-07-01',
+  days: [{"date":"17.6","day_of_week":"רביעי","title":"טיסת יציאה","location":"בדרך","summary":"יציאה מת\"א דרך אבו דאבי לסיאול","items":[{"time":"12:15","activity":"הגעה ל-TLV T3 (3 שעות לפני)","type":"logistics","location_key":"tlv_airport"},{"time":"15:15","activity":"EY608 TLV → AUH","type":"flight","location_key":"tlv_airport"},{"time":"19:25","activity":"נחיתה באבו דאבי","type":"flight"},{"time":"21:10","activity":"EY822 AUH → ICN","type":"flight","location_key":"icn_airport"}],"notes":["לוודא דרכונים + רישיון בינלאומי + כרטיסי אשראי + צילומים של כל ההזמנות במובייל","חלון מעבר באבו דאבי: 1:45ש. אם יש עיכוב 30+ דק בטיסה הראשונה - לפנות מיד לדלפק Etihad","במטוס להילה: לישון כמה שיותר (פער שעות 6 ש׳)","לשתות הרבה מים, לקום לכל שעתיים, גרבי לחץ"]},{"date":"18.6","day_of_week":"חמישי","title":"נחיתה + סיאול ערב ראשון","location":"סיאול","summary":"נחיתה, איסוף רכב, נסיעה למלון, ערב קליל במיונגדונג","items":[{"time":"10:50","activity":"נחיתה ב-ICN","type":"flight","location_key":"icn_airport"},{"time":"11:30","activity":"איסוף מזוודות + T-money card (7-Eleven בשדה) + eSIM הפעלה","type":"logistics"},{"time":"12:00","activity":"איסוף רכב Hi Rent A Car - להתקשר +82 10 7460 1101","type":"car"},{"time":"13:00","activity":"הגעה משוערת ל-Fraser Place Namdaemun (חניה בחינם)","type":"hotel","place_id":"namdaemun_market","location_key":"fraser_namdaemun"},{"time":"15:00","activity":"צ'ק-אין רשמי (לפני - להפקיד מזוודות)","type":"hotel"},{"time":"16:30","activity":"Namdaemun Market - שוק ענק, 600 שנה, בירה וטרמפוזה (טפורה)","type":"sightseeing","food_tip":"Kalguksu Alley בשוק - סמטת האטריות","place_id":"namdaemun_market","location_key":"namdaemun_market"},{"time":"18:30","activity":"ארוחת ערב: Myeongdong Kyoja (קלגוקסו מיתולוגי, 'The One' - הילה תאהב)","type":"food","address":"29 Myeongdong 10-gil, Jung-gu, Seoul","place_id":"myeongdong_kyoja","location_key":"myeongdong_kyoja"},{"time":"20:00","activity":"Myeongdong Night Market (אוכל רחוב) - 30-40 דק בלבד","type":"sightseeing","place_id":"myeongdong_night_market","location_key":"myeongdong_night_market"},{"time":"21:00","activity":"חזרה למלון - לישון מוקדם אחרי טיסה ארוכה","type":"logistics"}],"notes":["⚠️ יום ראשון בקוריאה אחרי 20 שעות טיסה - אל תעמיסו! אם הילה עייפה, חותכים את Myeongdong ל-20:30","להוריד עוד בשדה: Naver Map, KakaoMap, Papago","T-money: קונים ב-CU/GS25/7-Eleven בשדה התעופה. 4000₩ לכרטיס + טעינה 20,000₩ התחלה","Myeongdong Kyoja - לא לוקחים הזמנות, תור מהיר. מומלץ: Kalguksu + Bibim Guksu לשתף"]},{"date":"19.6","day_of_week":"שישי","title":"יום סיאול מלא - ארמונות וסמטאות","location":"סיאול","summary":"Gyeongbokgung, Bukchon, Insadong, N Seoul Tower לשקיעה","items":[{"time":"09:00","activity":"יציאה מהמלון","type":"logistics"},{"time":"09:30-12:00","activity":"Gyeongbokgung Palace + טקס חילופי משמר ב-10:00 (20 דק, בכניסה הראשית)","type":"sightseeing","tip":"כניסה חינם אם לובשים הנבוק (השכרות בחוץ)","place_id":"gyeongbokgung","location_key":"gyeongbokgung"},{"time":"12:15-13:15","activity":"Bukchon Hanok Village - סמטאות בתים מסורתיים (לא להיכנס לבתים, אנשים גרים שם)","type":"sightseeing","place_id":"bukchon","location_key":"bukchon_village"},{"time":"13:30-15:00","activity":"ארוחת צהריים ב-Insadong: Osegye Hyang (אוכל מקדש צמחוני) או Tosokchon Samgyetang (עוף במרק ג'ינסנג - מפורסם!)","type":"food","place_id":"osegye_hyang","location_key":"tosokchon"},{"time":"15:00-17:00","activity":"Insadong + Ikseon-dong - גלריות, תה, קפה סמטאות צילום יפות","type":"sightseeing","place_id":"insadong","location_key":"insadong"},{"time":"17:30","activity":"נסיעה ל-N Seoul Tower","type":"logistics","place_id":"n_seoul_tower","location_key":"n_seoul_tower"},{"time":"18:15-20:30","activity":"N Seoul Tower - מנעולי אוהבים, שקיעה 19:50, תצפית מדהימה","type":"sightseeing","place_id":"n_seoul_tower","location_key":"n_seoul_tower"},{"time":"20:45","activity":"ארוחת ערב: Bukchang-dong Food Alley (סמטה שלמה של BBQ קוריאני)","type":"food","place_id":"bukchang_alley","location_key":"bukchang_alley"},{"time":"22:30","activity":"חזרה למלון","type":"logistics"}],"notes":["⚠️ Gyeongbokgung סגור ביום שלישי! היום שישי - פתוח. (הארמון Changdeokgung סגור שני)","שקיעה ב-19:50 - להגיע לטאוור ב-18:15 כדי להיכנס, לעלות, ולתפוס אותה מלמעלה","Tosokchon Samgyetang (토속촌삼계탕) - כולל בתפריט הנשיא לשעבר. תור של 30 דק אבל שווה","אם מחמיר בחום או בעייפות - אפשר לחתוך את Ikseon-dong ולנוח במלון 15:00-17:00"]},{"date":"20.6","day_of_week":"שבת","title":"Seoraksan + נסיעה לסוקצ'ו","location":"סיאול → Seoraksan → סוקצ'ו","summary":"יום טבע והרים - הפארק הלאומי הכי יפה בקוריאה","items":[{"time":"07:00","activity":"יציאה מסיאול (מוקדם בגלל שבת - פקקים!)","type":"logistics"},{"time":"10:00","activity":"הגעה משוערת ל-Seoraksan National Park","type":"sightseeing","place_id":"seoraksan","location_key":"seoraksan_park"},{"time":"10:15-11:15","activity":"Sinheungsa Temple + פסל בודהא הענק (הליכה קצרה, שטוחה)","type":"sightseeing","place_id":"sinheungsa","location_key":"sinheungsa_temple"},{"time":"11:30-13:30","activity":"Biseondae Rocks - הליכה 2.3 ק\"מ (הלוך+חזור) יחסית שטוחה, נחל ונוף הררי מדהים","type":"sightseeing","place_id":"biseondae","location_key":"biseondae_rocks"},{"time":"13:45","activity":"ארוחת צהריים באזור הכניסה לפארק - פנקייק שורש לוטוס + מקפארי","type":"food"},{"time":"15:30","activity":"נסיעה לסוקצ'ו - 30 דק בלבד","type":"logistics"},{"time":"16:00","activity":"צ'ק-אין Sea Cruise Hotel","type":"hotel","place_id":"sea_cruise_hotel","location_key":"sea_cruise_sokcho"},{"time":"17:30","activity":"Abai Village + Gaetbae (הסירה הידנית, 500₩ לאדם) - כפר עם היסטוריה של פליטי צפון קוריאה","type":"sightseeing","tip":"הכי אייקוני בסוקצ'ו - סומן בכל המדריכים","place_id":"abai_village","location_key":"abai_village"},{"time":"19:00","activity":"ארוחת ערב: Abai Sundae (שוניקה קוריאנית מפורסמת מהאזור) או Mulhoe (דג גולמי בקרח)","type":"food","place_id":"abai_village","location_key":"abai_village"},{"time":"21:00","activity":"חזרה למלון","type":"logistics"}],"notes":["⚠️ שבת בפארק = עומס! לצאת ב-07:00 חובה","דילוג על רכבל Gwongeumseong - קווים של 1-2 שעות בסופ\"ש, וגם הרגל","Biseondae הכי מתאים לרגל שכואבת - שטוח יחסית, נוף מושלם","Abai Village אייקוני מהדרמה 'Autumn in My Heart' - הסירה הידנית Gaetbae חוויה חד פעמית"]},{"date":"21.6","day_of_week":"ראשון","title":"סוקצ'ו → אינצ'ון","location":"סוקצ'ו → אינצ'ון","summary":"יום נסיעה נעים עם מנוחה והתארגנות לכנס","items":[{"time":"09:00","activity":"בוקר רגוע בסוקצ'ו - Sokcho Beach + קפה בוקר","type":"sightseeing","place_id":"sokcho_beach","location_key":"sokcho_beach"},{"time":"10:30","activity":"Sokcho Tourist & Fish Market - לקנות אוכל רחוב לדרך (dakgangjeong!)","type":"food","place_id":"sokcho_market"},{"time":"11:30","activity":"יציאה לאינצ'ון (~3.5 שעות)","type":"logistics"},{"time":"15:00","activity":"הגעה ל-Sheraton Grand Incheon + צ'ק-אין","type":"hotel","place_id":"sheraton_incheon","location_key":"sheraton_incheon"},{"time":"16:00","activity":"מנוחה במלון / ספא / בריכה","type":"rest"},{"time":"18:00","activity":"Songdo Central Park - טיול קל, סירה על המים, נוף מגדלים","type":"sightseeing","place_id":"songdo_park","location_key":"songdo_park"},{"time":"19:30","activity":"ארוחת ערב ב-Songdo - שכונה חדשה עם הרבה מסעדות","type":"food","place_id":"songdo_park","location_key":"songdo_park"},{"time":"21:00","activity":"התארגנות הילה לכנס מחר","type":"logistics"}],"notes":["יום קל בכוונה - אחרי Seoraksan והרבה נסיעה","Sokcho Dakgangjeong (עוף מתוק-חריף) - הכי מפורסם באזור, חובה לנסות","Songdo זו 'עיר עתיד' - שכונה חדשה יוקרתית באינצ'ון, רגועה וצילומית"]},{"date":"22.6","day_of_week":"שני","title":"הילה בכנס עד 15:00 + ערב זוגי בסיאול","location":"אינצ'ון → סיאול","summary":"יום קצר לרון בבוקר, חזרה לאסוף את הילה, ערב זוגי בסיאול","items":[{"time":"08:30","activity":"הילה - נסיעה לכנס","type":"logistics"},{"time":"09:00","activity":"רון - בוקר חופשי: אופציה 1: Seongsu-dong (וייב מודרני, קפה, בוטיקים - 35 דק נסיעה)","type":"sightseeing","place_id":"seongsu_dong","location_key":"seongsu_dong"},{"time":"09:00","activity":"OR אופציה 2: רגוע במלון + בריכה/ספא","type":"rest"},{"time":"14:30","activity":"רון - חזרה לאינצ'ון לאסוף את הילה","type":"logistics"},{"time":"15:30","activity":"יציאה לסיאול","type":"logistics"},{"time":"16:30","activity":"הגעה לסיאול - קפה באזור Gangnam או Hongdae","type":"sightseeing","place_id":"hongdae","location_key":"hongdae"},{"time":"17:30","activity":"Hongdae - שכונת סטודנטים צעירה, מופעי רחוב, חנויות","type":"sightseeing","place_id":"hongdae","location_key":"hongdae"},{"time":"19:30","activity":"ארוחת ערב: Maple Tree House (KBBQ יוקרתי) או Jungsik (מישלן - להזמין מראש)","type":"food","place_id":"maple_tree","location_key":"maple_tree_house"},{"time":"22:00","activity":"חזרה לאינצ'ון","type":"logistics"}],"notes":["⚠️ תיקון מ-GPT: פאלדאנג יותר מדי רחוק מאינצ'ון ליום שני בבוקר (תנועה)","Seongsu-dong = 'הברוקלין של סיאול' - קפה מגניב, בוטיקים, וייב צעיר","Hongdae ערב שני שקט יותר מסופש - טוב לנו","חזרה לא יאוחר מ-22:00 - הילה בכנס מחר בערב רביעי מאוחר"]},{"date":"23.6","day_of_week":"שלישי","title":"יום טיול מלא: Muuido Island","location":"אינצ'ון (אי מואוידו)","summary":"יום ים קליל - אי יפה עם חופים, גישה ברכב בלבד","items":[{"time":"09:30","activity":"יציאה מהמלון","type":"logistics"},{"time":"10:15","activity":"הגעה ל-Muuido Island (דרך גשר Muuidaegyo - גישה ברכב ישירה)","type":"sightseeing","place_id":"muuido_hanagae","location_key":"muuido_island"},{"time":"10:30-12:30","activity":"Hanagae Beach - החוף העיקרי, אפשר הליכה קלה על החוף","type":"sightseeing","place_id":"muuido_hanagae","location_key":"muuido_island"},{"time":"12:30-14:00","activity":"ארוחת צהריים דגים מול הים (מסעדות רבות בחוף, רעננות היום)","type":"food"},{"time":"14:00-15:30","activity":"So-Muuido - אי קטן ליד, מחובר בגשר הליכה. כפר דייגים, נוף מצוק מדהים","type":"sightseeing","place_id":"muuido_hanagae","location_key":"muuido_island"},{"time":"15:30-17:00","activity":"Silmi Beach - החוף השני, פחות עמוס. קפה/גלידה.","type":"sightseeing","place_id":"muuido_silmi","location_key":"silmi_beach"},{"time":"17:00","activity":"חזרה למלון + מנוחה","type":"logistics"},{"time":"19:30","activity":"ארוחת ערב רגועה באינצ'ון או משלוח למלון","type":"food"}],"notes":["⚠️ שלישי = יום חופשי ממסעדות פחות עמוס. מזל!","גישה ברכב בלבד (גשר Muuidaegyo) - לא צריך מעבורת יותר מ-2019","Gyeongbokgung סגור היום - טוב שלא תכננתם אותו כאן","עדיף לא להעמיס - זה יום ההתרגעות לפני ה-DMZ מחר"]},{"date":"24.6","day_of_week":"רביעי","title":"DMZ (רון) + הילה בכנס עד 17:00","location":"אינצ'ון + DMZ","summary":"רון - סיור DMZ היסטורי. הילה מסיימת כנס בערב.","items":[{"time":"06:30","activity":"רון - איסוף לסיור DMZ (תלוי בחברה, לרוב מתחיל ברכבת/מלון)","type":"sightseeing","place_id":"imjingak","location_key":"imjingak_dmz"},{"time":"08:30","activity":"הילה - כנס","type":"logistics"},{"time":"09:00-14:00","activity":"סיור DMZ: Imjingak, Third Infiltration Tunnel, Dora Observatory, Bridge of Freedom","type":"sightseeing","place_id":"imjingak","location_key":"imjingak_dmz"},{"time":"14:30","activity":"רון - חזרה משוערת לסיאול/אינצ'ון","type":"logistics"},{"time":"15:30","activity":"רון - חזרה למלון","type":"rest"},{"time":"17:00","activity":"הילה מסיימת כנס","type":"logistics"},{"time":"18:00","activity":"ערב רגוע: ארוחת ערב ב-Songdo או מלון (אולי חגיגה לסיום הכנס!)","type":"food","place_id":"songdo_park","location_key":"songdo_park"},{"time":"21:00","activity":"התארגנות מזוודות לג'ג'ו מחר","type":"logistics"}],"notes":["🔴 חובה להזמין DMZ עד 21.6 לכל המאוחר (72 שעות לפני)! נדרש סריקת דרכון","ספקים מומלצים: VIP Travel, Klook - 'DMZ Half-Day Tour'. המחיר ~80,000₩ (250 שקל)","JSA (פנמונג'ום) לא נפתח לרישום פתוח לרוב - תסתפק ב-DMZ Half-Day","להביא: דרכון (בדיקות), בגדים מכובדים (אין שורט, סנדלים, חולצות ללא שרוולים)","חזרה מוקדמת יחסית - יש זמן מנוחה לפני הטיסה מחר"]},{"date":"25.6","day_of_week":"חמישי","title":"מעבר לג'ג'ו","location":"אינצ'ון → GMP → ג'ג'ו","summary":"יום מעבר - רכב לגימפו, טיסה, איסוף רכב חדש, מלון בסוגוויפו","items":[{"time":"10:00","activity":"יציאה מה-Sheraton (גימפו 40 דק)","type":"logistics","location_key":"gmp_airport"},{"time":"11:00","activity":"הגעה לשדה גימפו GMP","type":"logistics","place_id":"GMP","location_key":"gmp_airport"},{"time":"11:30","activity":"החזרת רכב Hi Rent A Car","type":"car"},{"time":"12:00","activity":"ארוחת צהריים קלה בטרמינל (Paris Baguette, Isaac Toast)","type":"food"},{"time":"12:25","activity":"בידוק (שעתיים לפני טיסת פנים)","type":"logistics"},{"time":"14:25","activity":"טיסה 7C125 GMP → CJU","type":"flight","place_id":"GMP","location_key":"gmp_airport"},{"time":"15:40","activity":"נחיתה בג'ג'ו","type":"flight"},{"time":"16:00","activity":"איסוף רכב Yesaway - Gate 5, שאטל Area 4 Slot 3","type":"car","place_id":"CJU"},{"time":"16:30","activity":"נסיעה למלון GoldOne (40-50 דק)","type":"logistics","place_id":"goldone_hotel","location_key":"goldone_jeju"},{"time":"17:30","activity":"צ'ק-אין GoldOne Hotel & Suites","type":"hotel","place_id":"goldone_hotel","location_key":"goldone_jeju"},{"time":"19:00","activity":"ארוחת ערב בסוגוויפו - אפשר לנסות BlackPork Street (Don Sa Don מומלץ)","type":"food","place_id":"don_sa_don","location_key":"seogwipo_market"}],"notes":["⚠️ לזכור: רישיון בינלאומי חובה באיסוף הרכב בג'ג'ו","מזוודה: Jeju Air מגבלה 15 ק\"ג + 5 תוספת - לבדוק משקל לפני שעוזבים","Don Sa Don (돈사돈) = הכי מפורסם לבלק פורק (חזיר שחור ג'ג'ו המקומי) - יש תור"]},{"date":"26.6","day_of_week":"שישי","title":"ג'ג'ו - דרום ומערב (יום קל)","location":"ג'ג'ו דרום","summary":"מצוקי לבה, סלעים, מפלים - יום קל ליד המלון","items":[{"time":"10:00","activity":"יציאה (יום נינוח - אין צורך לקום מוקדם)","type":"logistics"},{"time":"10:30-11:45","activity":"Jusangjeolli Lava Cliffs - מצוקים משושים מרשימים מול הים, אפס הליכה","type":"sightseeing","place_id":"jusangjeolli","location_key":"jusangjeolli"},{"time":"12:00-13:30","activity":"ארוחת צהריים: Seogwipo Maeil Olle Market - שוק מקומי, אוכל רחוב מעולה","type":"food","place_id":"seogwipo_market","location_key":"seogwipo_market"},{"time":"13:45-14:30","activity":"Oedolgae Rock - עמוד סלע בודד בים, הליכה קצרה","type":"sightseeing","place_id":"oedolgae","location_key":"oedolgae"},{"time":"15:00-16:30","activity":"Cheonjiyeon Waterfall - מפל קל להגעה (לבחור אחד בלבד משלושת המפלים בדרום)","type":"sightseeing","place_id":"cheonjiyeon","location_key":"cheonjiyeon"},{"time":"17:00","activity":"חזרה למלון + מנוחה / בריכה","type":"rest"},{"time":"19:30","activity":"ארוחת ערב: Black Pork BBQ (Don Sa Don או Heukdwaeji Garden)","type":"food","place_id":"don_sa_don","location_key":"don_sa_don"}],"notes":["⚠️ יום ראשון בג'ג'ו - אל תעמיסו! מזל אוויר + שיור מטיסה","Jusangjeolli - רק 15 דק ליהנות מהנוף, לא צריך יותר","מכל המפלים: Cheonjiyeon הכי קל לרגל (5 דק הליכה מהחניה)","💡 זריחה מחר ב-Seongsan: אם רוצים ללכת - לקום ב-03:45. החלטה בערב הזה!"]},{"date":"27.6","day_of_week":"שבת","title":"ג'ג'ו מזרח - יום ההיילייט!","location":"ג'ג'ו מזרח","summary":"זריחה אפשרית + Seopjikoji + Udo Island","items":[{"time":"03:45","activity":"🌅 אופציונלי: יקיצה לזריחה ב-Seongsan Ilchulbong","type":"optional","note":"בחירה בערב של 26.6","place_id":"seongsan","location_key":"seongsan_ilchulbong"},{"time":"04:00","activity":"יציאה מהמלון (אם בחרנו בזריחה)","type":"logistics"},{"time":"04:50","activity":"הגעה ל-Seongsan - השער פתוח מ-04:30 בקיץ","type":"sightseeing","place_id":"seongsan"},{"time":"05:15","activity":"🌅 זריחה מהפסגה - חוויה UNESCO מיתולוגית","type":"sightseeing"},{"time":"07:00","activity":"חזרה למלון + ארוחת בוקר + שינה קצרה אם רוצים","type":"rest"},{"time":"10:00","activity":"(מסלול חלופי אם ויתרנו על הזריחה): יציאה לג'ג'ו מזרח","type":"logistics"},{"time":"11:00-13:00","activity":"Seongsan Ilchulbong - עלייה לפסגה (אם לא עלינו בזריחה). 20-30 דק הליכה.","type":"sightseeing","place_id":"seongsan","location_key":"seongsan_ilchulbong"},{"time":"13:00-14:30","activity":"ארוחת צהריים - Haenyeo (צוללניות מסורתיות) קרוב לשם, אוכל ים טרי","type":"food","place_id":"seongsan"},{"time":"14:45","activity":"Seongsan Port - מעבורת ל-Udo Island (כל 30 דק, 15 דק שייט)","type":"logistics","place_id":"seongsan","location_key":"udo_island"},{"time":"15:00-18:00","activity":"Udo Island - אי קטן ומהמם. להשכיר קטנוע/אופניים חשמליים (15,000₩). חופים לבנים, שדות בוטן סגולים","type":"sightseeing","place_id":"udo","location_key":"udo_island"},{"time":"18:30","activity":"מעבורת חזרה לג'ג'ו","type":"logistics"},{"time":"19:30","activity":"Seopjikoji - שקיעה על המצוקים (15 דק נסיעה)","type":"sightseeing","place_id":"seopjikoji","location_key":"seopjikoji"},{"time":"20:30","activity":"ארוחת ערב במזרח ג'ג'ו או חזרה למלון","type":"food"}],"notes":["🌅 זריחה = חוויה חד-פעמית. UNESCO. זה רגע שזוכרים לכל החיים. תוסיפו להצבעה עם הילה בערב הקודם.","Udo = 'האי הקטן של האי' - יפה מאוד, פחות מתוייר. קטנוע/אופניים חשמליים חובה","אם מחליטים לוותר על הזריחה - אותו יום בדיוק, רק מאוחר יותר. עדיין מלא ומדהים.","Seopjikoji = אתר הצילום של הדרמה 'All-In' - פרחי ראפ-שדה וצפון אוקיינוסי"]},{"date":"28.6","day_of_week":"ראשון","title":"Hallasan לייט + טבע","location":"ג'ג'ו מרכז","summary":"יום הר בעדינות - מסלול קצר בלבד, בהתאם לרגל","items":[{"time":"09:30","activity":"יציאה מהמלון","type":"logistics"},{"time":"10:30-13:00","activity":"Eoseungsaengak Trail (Hallasan) - מסלול קצרצר 1.3 ק\"מ שטוח מאוד, תצפית יפה על ההר","type":"sightseeing","alt":"אלטרנטיבה: Sangumburi Crater - כתם מישורי פתוח, 10 דק הליכה, אפס מאמץ","place_id":"eoseungsaengak","location_key":"eoseungsaengak"},{"time":"13:30-15:00","activity":"ארוחת צהריים: Jeju Noodle Street - גגייג'ומיון (אטריות שעועית שחורה קוריאניות)","type":"food","place_id":"seogwipo_market","location_key":"jeju_noodle_street"},{"time":"15:30-17:00","activity":"Manjanggul Cave - מערת לבה UNESCO, מהלך שטוח 1 ק\"מ בתוך הגלריה (קריר נעים בקיץ)","type":"sightseeing","place_id":"manjanggul","location_key":"manjanggul"},{"time":"17:30","activity":"קפה עם נוף: Bomnal Cafe או Monsant Cafe (ארכיטקטורה)","type":"food","place_id":"monsant_cafe","location_key":"monsant_cafe"},{"time":"19:30","activity":"ארוחת ערב בסוגוויפו","type":"food","location_key":"seogwipo_market"}],"notes":["⚠️ הלסאן המלא = 10 שעות, 1950 מ'. לא ריאלי עם הרגל. במקום - Eoseungsaengak או Sangumburi","Manjanggul Cave UNESCO - מערת לבה טבעית. 14 מעלות בפנים (מושלם בקיץ חם!). אבל הליכה 1 ק\"מ","Jjajangmyeon = הקוריאני אוכל 'אבא' קלאסי. אטריות + רוטב ירקות-שעועית שחורה. טעם מיוחד."]},{"date":"29.6","day_of_week":"שני","title":"יום גמיש - בחירה בזמן אמת","location":"ג'ג'ו","summary":"להחליט בבוקר לפי מצב הרגל, החום, והכיף","items":[{"time":"10:00","activity":"בוקר במלון - ספא / בריכה / קפה","type":"rest"},{"time":"12:00","activity":"בחירה: Plan A (אקטיבי) או Plan B (רגוע)","type":"logistics"}],"plan_a":{"title":"Plan A - אקטיבי (אם הרגל בסדר)","items":["צפון ג'ג'ו - Hyeopjae Beach (החוף הכי יפה באי - מים תכלת, חול לבן)","Hallim Park - גנים יפיפיים + מערות","Aewol Cafe Street - סטריפ קפה מעוצבים מול הים","Jeju Aquaplanet - האקווריום הגדול בקוריאה (2-3 שעות)"]},"plan_b":{"title":"Plan B - רגוע (מנוחה)","items":["ספא/בריכה במלון","Jungmun Beach - החוף המלון מלאומי","Jeongbang Waterfall - היחיד שנופל ישר לים","עיסוי קוריאני מסורתי (Jimjilbang - חוויית ספא אותנטית)","קניות מזכרות ב-Seogwipo Olle Market"]},"notes":["⚠️ 12 ימי טיול מאחור - יום רגוע מומלץ מאוד. אל להתגבר!","Hyeopjae מוגדר אחד מ-'3 החופים היפים בקוריאה'","Jimjilbang = חוויה קוריאנית אותנטית. 10,000₩ כניסה. סאונות, בריכות מינרלים, שינה על רצפה מחוממת","ערב: ארוזים חלק מהמזוודות לקראת החזרה מחר"]},{"date":"30.6","day_of_week":"שלישי","title":"החזרה לישראל","location":"ג'ג'ו → ICN → AUH → TLV","summary":"יום של מעברים - חזרה הביתה","items":[{"time":"06:30","activity":"קימה, ארוחת בוקר אחרונה","type":"logistics"},{"time":"07:30","activity":"התארגנות סופית מזוודות","type":"logistics"},{"time":"08:30","activity":"יציאה מהמלון","type":"logistics"},{"time":"09:00","activity":"החזרת רכב Yesaway (מוקדם מ-10:30 שבהזמנה - אין בעיה)","type":"car","place_id":"CJU"},{"time":"09:15","activity":"Mobile Check-in Jeju Air באפליקציה + Self Bag Drop (חוסך תור!)","type":"logistics","place_id":"CJU"},{"time":"09:45","activity":"בידוק והמתנה בשדה ג'ג'ו","type":"logistics"},{"time":"11:50","activity":"טיסה 7C116 CJU → GMP","type":"flight","place_id":"GMP","location_key":"gmp_airport"},{"time":"13:05","activity":"נחיתה בגימפו","type":"flight","location_key":"gmp_airport"},{"time":"13:30","activity":"מעבר ל-ICN (כשעה ברכב שדה-לשדה)","type":"logistics","place_id":"ICN","location_key":"icn_airport"},{"time":"14:45","activity":"הגעה ל-ICN Terminal 1","type":"logistics","place_id":"ICN","location_key":"icn_airport"},{"time":"15:00","activity":"בידוק + צ'ק-אין + החזר מע\"מ אם רלוונטי","type":"logistics"},{"time":"17:45","activity":"EY823 ICN → AUH","type":"flight","place_id":"ICN","location_key":"icn_airport"},{"time":"23:00","activity":"נחיתה באבו דאבי","type":"flight"}],"notes":["⚠️ מעבר GMP → ICN: 60 דק נסיעה + 15 דק באפר = 1:15. בטוח עם 2:40 חלון.","אפשרויות חזרה GMP→ICN: מונית (60-70,000₩), AREX + שאטל (זול אבל מסובך עם מזוודות), אוטובוס Limo 6000 (8,000₩)","החזר מע\"מ: שמרתם קבלות? בדלפק Tax Free לפני הבידוק. 5-10% החזר","אוכל בטרמינל ICN: Paris Baguette, Tous les Jours, Shinsegae Food Hall (לאוכל טוב יותר)"]},{"date":"1.7","day_of_week":"רביעי","title":"נחיתה בישראל","location":"AUH → TLV","summary":"חזרה הביתה!","items":[{"time":"02:45","activity":"EY609 AUH → TLV","type":"flight","location_key":"tlv_airport"},{"time":"05:10","activity":"נחיתה בנמל תעופה בן גוריון","type":"flight","location_key":"tlv_airport"},{"time":"06:00","activity":"יציאה משדה + נסיעה הביתה","type":"logistics"},{"time":"07:30","activity":"😴 שינה!","type":"rest"}],"notes":["ברוך הבא הביתה 🏠","לא לעבוד היום - פער שעות 6 ש׳ + חוסר שינה = נסיון לעבוד = אסון","לא לשכוח להחזיר את הילה מהשקע היפני"]}],
+  bookings: {"flights":[{"date":"17.6","flight":"EY608","route":"TLV → AUH","time":"15:15-19:25","pnr_ron":"9SWHIO","pnr_hila":"9SRO5Y","seats":"07A/07C","terminal":"T3 → A","doc_url":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_ron":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_hila":"https://drive.google.com/file/d/1geg145ql0ZmwnIRZ2dD38FEBhBFlBI1i/view?usp=drive_link"},{"date":"17-18.6","flight":"EY822","route":"AUH → ICN","time":"21:10-10:50","pnr_ron":"9SWHIO","pnr_hila":"9SRO5Y","seats":"25A/25C","terminal":"A → T1","doc_url":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_ron":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_hila":"https://drive.google.com/file/d/1geg145ql0ZmwnIRZ2dD38FEBhBFlBI1i/view?usp=drive_link"},{"date":"25.6","flight":"7C125","route":"GMP → CJU","time":"14:25-15:40","pnr_ron":"Z5JUTB","pnr_hila":"Z5JUTB","seats":"8D/8F","terminal":"Jeju Air","doc_url":"https://drive.google.com/file/d/1TiDGwTIArKkJis1VJpe6LuyYSHUICENI/view?usp=drive_link"},{"date":"30.6","flight":"7C116","route":"CJU → GMP","time":"11:50-13:05","pnr_ron":"Z5JUTB","pnr_hila":"Z5JUTB","seats":"6D/6F","terminal":"Jeju Air","doc_url":"https://drive.google.com/file/d/1TiDGwTIArKkJis1VJpe6LuyYSHUICENI/view?usp=drive_link"},{"date":"30.6","flight":"EY823","route":"ICN → AUH","time":"17:45-23:00","pnr_ron":"9SWHIO","pnr_hila":"9SRO5Y","seats":"25A/25C","terminal":"T1 → A","doc_url":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_ron":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_hila":"https://drive.google.com/file/d/1geg145ql0ZmwnIRZ2dD38FEBhBFlBI1i/view?usp=drive_link"},{"date":"1.7","flight":"EY609","route":"AUH → TLV","time":"02:45-05:10","pnr_ron":"9SWHIO","pnr_hila":"9SRO5Y","seats":"07A/07C","terminal":"A → T3","doc_url":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_ron":"https://drive.google.com/file/d/1mlGwRvtwueGIfs-UmnW_PgO4zCViyblW/view?usp=drive_link","doc_url_hila":"https://drive.google.com/file/d/1geg145ql0ZmwnIRZ2dD38FEBhBFlBI1i/view?usp=drive_link"}],"hotels":[{"dates":"18-20.6","name":"Fraser Place Namdaemun","city":"סיאול","phone":"+82 2 2220 8000","booking":"6088-002-013","checkin":"15:00","checkout":"11:00","location_key":"fraser_namdaemun","doc_url":"https://drive.google.com/file/d/1XzneoqOdjqA860FNe0h1TigkdsstL25I/view?usp=drive_link"},{"dates":"20-21.6","name":"Sea Cruise Hotel","city":"סוקצ'ו","phone":"+82 33 637 0067","booking":"5030542086","checkin":"15:00","checkout":"11:00","location_key":"sea_cruise_sokcho","doc_url":"https://drive.google.com/file/d/1FuMO8yrrojr3TdnnmGxhbJQwC4GU5W0x/view?usp=drive_link"},{"dates":"21-25.6","name":"Sheraton Grand Incheon","city":"אינצ'ון","phone":"+82 32 835 1000","booking":"6488425057","checkin":"15:00","checkout":"11:00","location_key":"sheraton_incheon","doc_url":"https://drive.google.com/file/d/1qnVOpI_Xbd3Iyq5yYPrlc4cP9dnMsxlG/view?usp=drive_link"},{"dates":"25-30.6","name":"GoldOne Hotel & Suites","city":"ג'ג'ו (סוגוויפו)","phone":"+82 64 801 5000","booking":"6280374218","checkin":"15:00","checkout":"11:00","location_key":"goldone_jeju","doc_url":"https://drive.google.com/file/d/1nZOokQbqFKb29cDBBHKTpJ1PyjD9l-FM/view?usp=drive_link"}],"cars":[{"company":"Hi Rent A Car","pickup":"18.6 12:00 ICN","return":"25.6 12:00 GMP","booking":"780171196","phone":"+82 10 7460 1101","phone_alt":"+82 10 9860 1120","car":"Hyundai Avante","doc_url":"https://drive.google.com/file/d/1qsCRdBDzUYdXU-0xaxsTC_b4gDMdBL1w/view?usp=drive_link"},{"company":"Yesaway","pickup":"25.6 16:30 CJU","return":"30.6 09:00 CJU","booking":"766437414","phone":"+82 64 743 1515","phone_alt":"+82 10 5149 0630","car":"Hyundai Avante","doc_url":"https://drive.google.com/file/d/1pkvmZ-yWyq7q6PknP-O0UYBPTmLI_1ai/view?usp=drive_link"}]},
+  emergency: [{"name":"שגרירות ישראל סיאול","phone":"+82 2 564 3448","phone_emergency":"+82 10 9412 4233"},{"name":"משטרה (חירום)","phone":"112"},{"name":"אמבולנס / כיבוי אש","phone":"119"},{"name":"קו מידע תיירים (אנגלית/עברית)","phone":"1330"},{"name":"Etihad Korea","phone":"+82 2 3708 4664"},{"name":"Jeju Air","phone":"+82 1599 1500"},{"name":"ביטוח נסיעות","phone":"","note":"השלם לפני יציאה"}],
+  apps: [{"name":"Naver Map","purpose":"ניווט ברכב (Google Maps לא מלא בקוריאה)","priority":"חובה"},{"name":"KakaoMap","purpose":"ניווט חלופי + חיפוש עסקים","priority":"חובה"},{"name":"Papago","purpose":"תרגום מעולה לקוריאנית (עדיף על Google Translate)","priority":"חובה"},{"name":"Subway Korea","purpose":"רכבת תחתית בסיאול","priority":"מומלץ"},{"name":"Kakao T","purpose":"מוניות (כמו Uber)","priority":"מומלץ"},{"name":"Jeju Air","purpose":"Check-in וכרטיסי עלייה","priority":"חובה"},{"name":"KakaoTalk","purpose":"וואטסאפ קוריאני - בעלי עסקים עונים כאן","priority":"לא חובה"}],
+  phrases: [{"he":"שלום / הי","kr":"안녕하세요","romaji":"אָנְיוֹנְג־הָסֵיוֹ","use":"ברכה בסיסית - לכל הכיוונים"},{"he":"תודה","kr":"감사합니다","romaji":"קָאמְסָאהָאמְנִידָה","use":"אחרי שמישהו עוזר"},{"he":"תודה (פשוט)","kr":"고마워요","romaji":"קוֹמָאווֹיוֹ","use":"פחות רשמי"},{"he":"כן","kr":"네","romaji":"נֶה","use":""},{"he":"לא","kr":"아니요","romaji":"אָנִיוֹ","use":""},{"he":"סליחה","kr":"죄송합니다","romaji":"צֶ'גסוֹנגהָאמְנִידָה","use":"אחרי שדחפתם מישהו"},{"he":"אני לא מדבר קוריאנית","kr":"한국어 못해요","romaji":"הָאנגוגוֹ מוֹטֶאיוֹ","use":""},{"he":"אנגלית?","kr":"영어?","romaji":"יוֹנגוֹ?","use":"לשאול האם יש אנגלית"},{"he":"כמה זה?","kr":"얼마예요?","romaji":"אוֹלְמָאיֶיוֹ?","use":"בחנות או שוק"},{"he":"זה בבקשה","kr":"이거 주세요","romaji":"אִיגוֹ ג'וֹסֵיוֹ","use":"להצביע ולבקש"},{"he":"החשבון בבקשה","kr":"계산서 주세요","romaji":"קיֶסָאנסוֹ ג'וֹסֵיוֹ","use":"במסעדה"},{"he":"טעים!","kr":"맛있어요","romaji":"מָאשִישוֹיוֹ","use":"אחרי ארוחה טעימה"},{"he":"לא חריף בבקשה","kr":"안 맵게 해주세요","romaji":"אָן מֶאפְגֶה הֶג'וֹסֵיוֹ","use":"חשוב במסעדה!"},{"he":"איפה השירותים?","kr":"화장실 어디예요?","romaji":"הוָאג'נגשיל אוֹדִייֶיוֹ?","use":""},{"he":"מים בבקשה","kr":"물 주세요","romaji":"מוּל ג'וֹסֵיוֹ","use":""},{"he":"עזרה","kr":"도와주세요","romaji":"דוֹוָאג'וֹסֵיוֹ","use":"בחירום"},{"he":"כואב לי","kr":"아파요","romaji":"אָפָּאיוֹ","use":""},{"he":"איפה?","kr":"어디예요?","romaji":"אוֹדִייֶיוֹ?","use":"שואלים לכיוון"},{"he":"שמאלה","kr":"왼쪽","romaji":"וֶנג'וֹג","use":""},{"he":"ימינה","kr":"오른쪽","romaji":"אוֹרוֹנג'וֹג","use":""},{"he":"ישר","kr":"직진","romaji":"ג'יקג'ין","use":""},{"he":"תחנה","kr":"역","romaji":"יוֹק","use":"'Gangnam-yeok' = תחנת גנגנם"},{"he":"אני צריך מונית","kr":"택시 불러주세요","romaji":"טֶקסי בּוּלוֹג'וֹסֵיוֹ","use":"לקרוא למונית"},{"he":"לאט יותר","kr":"천천히","romaji":"צ'וֹנצ'וֹנהִי","use":"למישהו שמדבר מהר"},{"he":"יפה!","kr":"예뻐요","romaji":"יֶפֶּאיוֹ","use":"לדברים יפים"},{"he":"אני ישראלי","kr":"이스라엘 사람이에요","romaji":"איסְרָאֶל סָארָאמִיֶיוֹ","use":""},{"he":"להתראות (לאדם שנשאר)","kr":"안녕히 계세요","romaji":"אָנְיוֹנְגהִי גֵיסֵיוֹ","use":"אומרים לאדם שנשאר (אתם הולכים)"}],
+  prep: [{"task":"🎫 K-ETA: לא נדרש! ישראלים פטורים עד 31.12.2026","deadline":"","note":"רק דרכון תקף נדרש","notify":false,"info_only":true},{"task":"✈️ e-Arrival Card - טופס נחיתה דיגיטלי (חובה!)","deadline":"15.6.2026","note":"www.e-arrivalcard.go.kr • עד 3 ימים לפני הנחיתה • חינם • הילה ורון בנפרד","notify":false},{"task":"🚗 רישיון נהיגה בינלאומי (IDP) - חובה לרכב!","deadline":"10.6.2026","note":"דואר ישראל/מוטו • ~90₪ • בלי זה אין רכב","notify":false},{"task":"בדיקת תוקף דרכון (6 חודשים מתאריך החזרה)","deadline":"1.6.2026","note":"אם צריך חידוש - לפעול מיד","notify":false},{"task":"🛡️ ביטוח נסיעות","deadline":"12.6.2026","note":"הראל/כלל/AIG • כיסוי רפואי + ביטול","notify":true,"notify_days_before":3},{"task":"🔴 הזמנת סיור DMZ (רון, 24.6)","deadline":"20.6.2026","note":"VIP Travel / Klook / Viator • ~80,000₩ • נדרש דרכון","notify":true,"notify_days_before":5},{"task":"📱 רכישת eSIM","deadline":"14.6.2026","note":"Airalo 'Korea Asia' 10GB ~$18 / Holafly unlimited ~$55","notify":true,"notify_days_before":3},{"task":"🛫 Mobile Check-in טיסה הלוך (EY608)","deadline":"16.6.2026","note":"24 שעות לפני! אפליקציית Etihad • הילה ורון בנפרד (PNR שונים)","notify":true,"notify_days_before":1},{"task":"🛫 Mobile Check-in Jeju Air (30.6 CJU→GMP)","deadline":"29.6.2026","note":"24 שעות לפני • אפליקציית Jeju Air • PNR: Z5JUTB","notify":true,"notify_days_before":1},{"task":"🛫 Mobile Check-in Etihad חזרה (30.6 ICN→TLV)","deadline":"29.6.2026","note":"24 שעות לפני • אפליקציית Etihad • PNRs: הילה 9SRO5Y רון 9SWHIO","notify":true,"notify_days_before":1},{"task":"הודעה לחברת האשראי על נסיעה לקוריאה","deadline":"15.6.2026","note":"שלא יחסם כרטיס בחו\"ל","notify":false},{"task":"תרופות אישיות + העתק מרשמים","deadline":"14.6.2026","note":"לחלק בין תיק יד ומזוודה","notify":false},{"task":"הורדת אפליקציות Naver, KakaoMap, Papago","deadline":"15.6.2026","note":"חובה לפני הטיסה - לא עובדים Uber/Waze/Google","notify":false},{"task":"מפות אופליין ב-Google Maps","deadline":"16.6.2026","note":"סיאול, סוקצ'ו, אינצ'ון, ג'ג'ו","notify":false},{"task":"המרת מזומן ~500,000₩ (כ-1,400₪)","deadline":"14.6.2026","note":"בנק או שדה ICN בהגעה","notify":false},{"task":"🧳 אריזה (מטריה! Jangma - עונת גשמים)","deadline":"16.6.2026","note":"יוני = אפשרי גשם יומיומי","notify":false},{"task":"T-money card (בהגעה לשדה ICN)","deadline":"18.6.2026","note":"7-Eleven: 4,000₩ + טעינה 20,000₩","notify":false}],
+  tips: [{"emoji":"📱","title":"אינטרנט ו-SIM","body":"\n            <strong>eSIM זו הדרך הטובה ביותר:</strong>\n            <ul style=\"padding-right:20px;margin-top:8px;line-height:1.7;\">\n                <li><strong>Airalo</strong> - 'Korea Asia' 10GB ל-30 יום ~$18</li>\n                <li><strong>Holafly</strong> - unlimited 15 יום ~$55</li>\n                <li>מפעילים בישראל לפני הטיסה</li>\n                <li>נוחתים → כיבוי/הפעלה → עובד</li>\n            </ul>\n            <br>\n            <strong>חלופה:</strong> Wi-Fi egg בשדה (~5,000₩ ליום) - טוב לחלק עם הילה.\n        "},{"emoji":"💰","title":"כסף ותשלומים","body":"\n            <ul style=\"padding-right:20px;line-height:1.7;\">\n                <li><strong>שער ₪-₩:</strong> ~1 ₪ = 370 ₩</li>\n                <li><strong>ויזה</strong> עדיפה על מאסטרקרד</li>\n                <li>לפחות <strong>500,000 ₩ במזומן</strong> לשווקים</li>\n                <li>ATMs: <strong>Woori, KB, KEB Hana</strong> - 'Global ATM'</li>\n                <li><strong>החזר מע״מ:</strong> קניות מעל 30,000 ₩ בחנויות Tax Free</li>\n            </ul>\n        "},{"emoji":"🚇","title":"T-Money Card","body":"\n            <strong>כרטיס אחד לכל התחבורה:</strong>\n            <ul style=\"padding-right:20px;margin-top:8px;line-height:1.7;\">\n                <li>קונים ב-<strong>CU / GS25 / 7-Eleven</strong> בשדה</li>\n                <li>4,000 ₩ לכרטיס + 20,000 ₩ טעינה</li>\n                <li>עובד ברכבת, אוטובוס, מונית</li>\n                <li>אותו כרטיס בג'ג'ו</li>\n                <li>החזרה בסוף (מינוס 500 ₩ עמלה)</li>\n            </ul>\n        "},{"emoji":"🗺️","title":"ניווט - חשוב!","body":"\n            <strong>⚠️ Google Maps לא עובד מלא לניווט ברכב בקוריאה!</strong>\n            <br><br>\n            <strong>במקום:</strong>\n            <ul style=\"padding-right:20px;margin-top:8px;line-height:1.7;\">\n                <li><strong>Naver Map</strong> - הכי טוב לניווט ברכב, יש אנגלית</li>\n                <li><strong>KakaoMap</strong> - יותר עדכני לעסקים קטנים</li>\n                <li><strong>Subway Korea</strong> - למטרו סיאול</li>\n            </ul>\n            <br>\n            <strong>💡 באפליקציה הזו:</strong> הלחצן \"נווט אליי\" פותח את Naver Map עם יעד מוגדר.\n        "},{"emoji":"🍜","title":"אוכל - חשוב לדעת","body":"\n            <ul style=\"padding-right:20px;line-height:1.7;\">\n                <li><strong>לא חריף:</strong> 'An maepge haejuseyo' - זכרו!</li>\n                <li><strong>Banchan</strong> - תוספות חינם, אפשר לבקש עוד</li>\n                <li><strong>לא נותנים טיפ</strong> - לא נהוג בקוריאה</li>\n                <li>רוב המסעדות ללא הזמנות - תורים של 30 דק</li>\n                <li><strong>שני ידיים</strong> כשנותנים כסף/כרטיס</li>\n            </ul>\n        "},{"emoji":"🔌","title":"חשמל","body":"תקע קוריאני = אירופאי (אותו כמו ישראל). 220V 60Hz. אין צורך במתאם."},{"emoji":"☔","title":"מזג אוויר יוני-יולי","body":"\n            <strong>תחילת Jangma (עונת גשמים):</strong>\n            <ul style=\"padding-right:20px;margin-top:8px;line-height:1.7;\">\n                <li>טמפ': 22-28°C (חם ולח)</li>\n                <li>סיכוי גשם יומי ~40%</li>\n                <li>לחות 75-85%</li>\n                <li>ג'ג'ו: יותר גשום, סיכוי לטייפון</li>\n            </ul>\n            <br>\n            <strong>להביא:</strong> מטריה קטנה, נושם, ז'קט לערב.\n        "},{"emoji":"🆘","title":"חירום ובטיחות","body":"\n            <strong>קוריאה בטוחה מאוד.</strong>\n            <ul style=\"padding-right:20px;margin-top:8px;line-height:1.7;\">\n                <li><strong>112</strong> - משטרה</li>\n                <li><strong>119</strong> - אמבולנס</li>\n                <li><strong>1330</strong> - קו תיירים (עברית!)</li>\n                <li><strong>+82 2 564 3448</strong> - שגרירות ישראל</li>\n                <li>בתי חולים: מצוינים, אנגלית טובה</li>\n            </ul>\n        "},{"emoji":"🛒","title":"קניות","body":"\n            <strong>כדאי לקנות:</strong>\n            <ul style=\"padding-right:20px;margin-top:8px;line-height:1.7;\">\n                <li><strong>Olive Young</strong> - K-Beauty בחצי מהמחיר</li>\n                <li>תה ירוק Boseong</li>\n                <li>רמן Shin Ramyun</li>\n                <li>דבש יוז'ו</li>\n            </ul>\n        "},{"emoji":"🔤","title":"מנהגים","body":"\n            <ul style=\"padding-right:20px;line-height:1.7;\">\n                <li><strong>Bow קל</strong> - הראש למעלה לבכירים/קשישים</li>\n                <li><strong>שני ידיים</strong> תמיד בכסף/כרטיסים</li>\n                <li>לא לתקוע מקלות באורז - סמל מוות</li>\n                <li><strong>נעליים</strong> - מורידים בכניסה לבית/מקדש</li>\n                <li><strong>\"Kimchi!\"</strong> במקום Cheese בתמונות</li>\n            </ul>\n        "}],
+  locations: {"tlv_airport":{"name":"נתב\"ג","name_en":"Ben Gurion Airport","lat":32.0055,"lng":34.8854},"icn_airport":{"name":"נמל תעופה אינצ'ון","name_en":"Incheon International Airport","name_kr":"인천국제공항","lat":37.4602,"lng":126.4407},"gmp_airport":{"name":"נמל תעופה גימפו","name_en":"Gimpo Airport","name_kr":"김포공항","lat":37.5583,"lng":126.7905},"cju_airport":{"name":"נמל תעופה ג'ג'ו","name_en":"Jeju International Airport","name_kr":"제주국제공항","lat":33.5113,"lng":126.493},"fraser_namdaemun":{"name":"Fraser Place Namdaemun Seoul","name_en":"Fraser Place Namdaemun Seoul","name_kr":"프레이저 플레이스 남대문","address":"58 Sejong-daero, Jung-gu, Seoul","lat":37.5614,"lng":126.9758},"sea_cruise_sokcho":{"name":"Sea Cruise Hotel Sokcho","name_en":"Sea Cruise Hotel Sokcho","name_kr":"씨크루즈호텔 속초","address":"1, Cheongchoho-gil, Sokcho-si, Gangwon-do","lat":38.2074,"lng":128.5946},"sheraton_incheon":{"name":"Sheraton Grand Incheon Hotel","name_en":"Sheraton Grand Incheon Hotel","name_kr":"쉐라톤 그랜드 인천 호텔","address":"153, Convensia-daero, Yeonsu-gu, Incheon","lat":37.3883,"lng":126.6482},"goldone_jeju":{"name":"GoldOne Hotel & Suites Jeju","name_en":"GoldOne Hotel & Suites Jeju","name_kr":"골드원 호텔 앤 스위트 제주","address":"278, Jungmun Gwangwang-ro, Seogwipo-si, Jeju-do","lat":33.251,"lng":126.4127},"namdaemun_market":{"name":"Namdaemun Market","name_en":"Namdaemun Market","name_kr":"남대문시장","address":"21, Namdaemunsijang 4-gil, Jung-gu, Seoul","lat":37.5595,"lng":126.9774},"myeongdong_kyoja":{"name":"Myeongdong Kyoja Main Branch","name_en":"Myeongdong Kyoja Main Store","name_kr":"명동교자 본점","address":"29, Myeongdong 10-gil, Jung-gu, Seoul","lat":37.5631,"lng":126.9855},"myeongdong_night_market":{"name":"Myeongdong Night Market","name_en":"Myeongdong Street Food Night Market","name_kr":"명동 야시장","address":"Myeongdong, Jung-gu, Seoul","lat":37.5636,"lng":126.9857},"gyeongbokgung":{"name":"Gyeongbokgung Palace","name_en":"Gyeongbokgung Palace","name_kr":"경복궁","address":"161, Sajik-ro, Jongno-gu, Seoul","lat":37.5796,"lng":126.977},"bukchon_village":{"name":"Bukchon Hanok Village","name_en":"Bukchon Hanok Village","name_kr":"북촌한옥마을","address":"37, Gyedong-gil, Jongno-gu, Seoul","lat":37.5826,"lng":126.9836},"tosokchon":{"name":"Tosokchon Samgyetang","name_en":"Tosokchon Samgyetang","name_kr":"토속촌삼계탕","address":"5, Jahamun-ro 5-gil, Jongno-gu, Seoul","lat":37.5787,"lng":126.97},"insadong":{"name":"Insadong Cultural Street","name_en":"Insa-dong Street","name_kr":"인사동","address":"Insadong-gil, Jongno-gu, Seoul","lat":37.5745,"lng":126.9853},"ikseondong":{"name":"Ikseon-dong Hanok Street","name_en":"Ikseon-dong Hanok Village","name_kr":"익선동 한옥거리","address":"Ikseon-dong, Jongno-gu, Seoul","lat":37.5714,"lng":126.9884},"n_seoul_tower":{"name":"N Seoul Tower (Namsan Tower)","name_en":"N Seoul Tower","name_kr":"N서울타워","address":"105, Namsangongwon-gil, Yongsan-gu, Seoul","lat":37.5512,"lng":126.9882},"bukchang_alley":{"name":"Bukchang-dong Food Alley","name_en":"Bukchang-dong Meokjagolmok","name_kr":"북창동 먹자골목","address":"Bukchang-dong, Jung-gu, Seoul","lat":37.563,"lng":126.977},"seoraksan_park":{"name":"Seoraksan National Park (Sogongwon entrance)","name_en":"Seoraksan National Park","name_kr":"설악산국립공원 소공원","address":"833, Seoraksan-ro, Sokcho-si, Gangwon-do","lat":38.1193,"lng":128.4666},"sinheungsa_temple":{"name":"Sinheungsa Temple (Great Bronze Buddha)","name_en":"Sinheungsa Temple","name_kr":"신흥사","address":"Seoraksan, Sokcho-si, Gangwon-do","lat":38.1207,"lng":128.4662},"biseondae_rocks":{"name":"Biseondae Rock","name_en":"Biseondae Rock","name_kr":"비선대","address":"Seoraksan National Park, Sokcho","lat":38.1329,"lng":128.4552},"abai_village":{"name":"Abai Village (Abai Maeul)","name_en":"Abai Village Sokcho","name_kr":"아바이마을","address":"1-1, Cheongho-dong, Sokcho-si, Gangwon-do","lat":38.2003,"lng":128.5982},"sokcho_market":{"name":"Sokcho Tourist & Fishery Market","name_en":"Sokcho Jungang Market","name_kr":"속초관광수산시장","address":"Jungangno, Sokcho-si, Gangwon-do","lat":38.2041,"lng":128.5912},"sokcho_beach":{"name":"Sokcho Beach","name_en":"Sokcho Beach","name_kr":"속초해수욕장","address":"Daepo-dong, Sokcho-si, Gangwon-do","lat":38.21,"lng":128.6004},"songdo_park":{"name":"Songdo Central Park","name_en":"Songdo Central Park","name_kr":"송도센트럴파크","address":"85, Convensia-daero 160beon-gil, Yeonsu-gu, Incheon","lat":37.392,"lng":126.6427},"seongsu_dong":{"name":"Seongsu-dong Cafe Street","name_en":"Seongsu-dong","name_kr":"성수동 카페거리","address":"Seongsu-dong, Seongdong-gu, Seoul","lat":37.5444,"lng":127.0559},"hongdae":{"name":"Hongdae (Hongik University area)","name_en":"Hongdae Street","name_kr":"홍대거리","address":"Hongik-ro, Mapo-gu, Seoul","lat":37.5563,"lng":126.9236},"maple_tree_house":{"name":"Maple Tree House Itaewon (BBQ)","name_en":"Maple Tree House Itaewon","name_kr":"메이플트리하우스 이태원","address":"31, Itaewon-ro 27-gil, Yongsan-gu, Seoul","lat":37.5345,"lng":126.9928},"muuido_island":{"name":"Muuido Island - Hanagae Beach","name_en":"Muuido Hanagae Beach","name_kr":"무의도 하나개해수욕장","address":"Muuido, Jung-gu, Incheon","lat":37.4227,"lng":126.4247},"somuuido":{"name":"So Muuido Island","name_en":"So Muuido","name_kr":"소무의도","address":"So Muuido, Jung-gu, Incheon","lat":37.4057,"lng":126.4255},"silmi_beach":{"name":"Silmi Beach","name_en":"Silmi Beach","name_kr":"실미해수욕장","address":"Muuido, Jung-gu, Incheon","lat":37.433,"lng":126.4165},"imjingak_dmz":{"name":"Imjingak Park (DMZ tour pickup)","name_en":"Imjingak Resort","name_kr":"임진각","address":"148-40, Imjingak-ro, Munsan-eup, Paju-si, Gyeonggi-do","lat":37.8964,"lng":126.7406},"third_tunnel":{"name":"DMZ Third Infiltration Tunnel","name_en":"Third Tunnel of Aggression","name_kr":"제3땅굴","address":"Janpa-ri, Gunnae-myeon, Paju-si, Gyeonggi-do","lat":37.9444,"lng":126.6892},"dora_observatory":{"name":"Dora Observatory","name_en":"Dora Observatory","name_kr":"도라전망대","address":"Jangdan-myeon, Paju-si, Gyeonggi-do","lat":37.9411,"lng":126.7158},"jusangjeolli":{"name":"Jusangjeolli Cliff","name_en":"Jusangjeolli Cliff Daepo","name_kr":"주상절리대","address":"36-30, Jungmun-dong, Seogwipo-si, Jeju-do","lat":33.2382,"lng":126.4231},"seogwipo_market":{"name":"Seogwipo Maeil Olle Market","name_en":"Seogwipo Olle Market","name_kr":"서귀포매일올레시장","address":"18, Jungang-ro 62beon-gil, Seogwipo-si, Jeju-do","lat":33.2496,"lng":126.5606},"oedolgae":{"name":"Oedolgae Rock","name_en":"Oedolgae Rock Jeju","name_kr":"외돌개","address":"791, Sammae-bong-ro, Seogwipo-si, Jeju-do","lat":33.2353,"lng":126.5437},"cheonjiyeon":{"name":"Cheonjiyeon Waterfall","name_en":"Cheonjiyeon Falls","name_kr":"천지연폭포","address":"2-15, Cheonji-dong, Seogwipo-si, Jeju-do","lat":33.2458,"lng":126.5574},"don_sa_don":{"name":"Don Sa Don (Black Pork Restaurant Jeju)","name_en":"Don Sa Don Heuk Dwaeji","name_kr":"돈사돈","address":"1110, Yeon-dong, Jeju-si, Jeju-do","lat":33.4882,"lng":126.4881},"heukdwaeji_garden":{"name":"Heukdwaeji Garden Jeju","name_en":"Heukdwaeji Garden","name_kr":"흑돼지가든","address":"Seogwipo, Jeju-do","lat":33.2491,"lng":126.5624},"seongsan_ilchulbong":{"name":"Seongsan Ilchulbong Sunrise Peak","name_en":"Seongsan Ilchulbong Tuff Cone","name_kr":"성산일출봉","address":"284-12, Ilchul-ro, Seongsan-eup, Seogwipo-si, Jeju-do","lat":33.4584,"lng":126.9425},"seongsan_port":{"name":"Seongsan Port (Udo Ferry Terminal)","name_en":"Seongsanpo Ferry Terminal","name_kr":"성산포항 종합여객터미널","address":"112-7, Seongsandeungyong-ro, Seongsan-eup, Seogwipo-si, Jeju-do","lat":33.4735,"lng":126.9283},"udo_island":{"name":"Udo Island - Haumokdong Port","name_en":"Udo Haumokdong Port","name_kr":"우도 하우목동항","address":"Udo-myeon, Jeju-si, Jeju-do","lat":33.503,"lng":126.9522},"seopjikoji":{"name":"Seopjikoji","name_en":"Seopjikoji Cape","name_kr":"섭지코지","address":"107, Seopjikoji-ro, Seongsan-eup, Seogwipo-si, Jeju-do","lat":33.4247,"lng":126.927},"eoseungsaengak":{"name":"Eoseungsaengak Trail (Hallasan)","name_en":"Eoseungsaengak Hallasan","name_kr":"어승생악","address":"Hallasan National Park, Jeju-si, Jeju-do","lat":33.4082,"lng":126.4933},"sangumburi":{"name":"Sangumburi Crater","name_en":"Sangumburi Crater Jeju","name_kr":"산굼부리","address":"768, Bijarim-ro, Jocheon-eup, Jeju-si, Jeju-do","lat":33.4335,"lng":126.6846},"manjanggul":{"name":"Manjanggul Lava Cave","name_en":"Manjanggul Cave Jeju","name_kr":"만장굴","address":"182, Manjanggul-gil, Gimnyeong-ri, Gujwa-eup, Jeju-si, Jeju-do","lat":33.5284,"lng":126.7712},"jeju_noodle_street":{"name":"Jeju Noodle Street","name_en":"Jeju Noodle Street Gosan","name_kr":"제주국수거리","address":"Yongdam-dong, Jeju-si, Jeju-do","lat":33.507,"lng":126.5218},"monsant_cafe":{"name":"Monsant de Aewol Cafe","name_en":"Monsant Cafe Aewol","name_kr":"몽상드애월","address":"56-1, Aewolbukseo-gil, Aewol-eup, Jeju-si, Jeju-do","lat":33.4645,"lng":126.3028},"hyeopjae_beach":{"name":"Hyeopjae Beach Jeju","name_en":"Hyeopjae Beach","name_kr":"협재해수욕장","address":"Hyeopjae-ri, Hallim-eup, Jeju-si, Jeju-do","lat":33.3944,"lng":126.2397},"hallim_park":{"name":"Hallim Park Jeju","name_en":"Hallim Park","name_kr":"한림공원","address":"300, Hallim-ro, Hallim-eup, Jeju-si, Jeju-do","lat":33.3884,"lng":126.2409},"aewol_cafe_street":{"name":"Aewol Cafe Street","name_en":"Aewol Beach Cafe Street","name_kr":"애월 카페거리","address":"Aewol-eup, Jeju-si, Jeju-do","lat":33.4714,"lng":126.3097},"jeju_aquaplanet":{"name":"Aquaplanet Jeju","name_en":"Aquaplanet Jeju","name_kr":"아쿠아플라넷 제주","address":"95, Seopjikoji-ro, Seongsan-eup, Seogwipo-si, Jeju-do","lat":33.4346,"lng":126.9318},"jungmun_beach":{"name":"Jungmun Saekdal Beach","name_en":"Jungmun Saekdal Beach","name_kr":"중문색달해변","address":"215, Jungmungwangwang-ro 72beon-gil, Seogwipo-si, Jeju-do","lat":33.2461,"lng":126.4127},"jeongbang_falls":{"name":"Jeongbang Waterfall","name_en":"Jeongbang Falls Jeju","name_kr":"정방폭포","address":"37, Chilsimni-ro 214beon-gil, Seogwipo-si, Jeju-do","lat":33.2442,"lng":126.5708}},
+  driveFolder: "https://drive.google.com/drive/folders/1sogqvwbcGKX6ncKgehtC__Ra5ExyQ98B",
+  conference: [{"title":"כנס הילה","dates":"22-24.6.2026 • אינצ'ון","note":"הכנס של הילה - בזמן זה (24.6) רון יבצע DMZ Tour. יש לוודא לו״ז מדויק עם המארגנים לפני היציאה.","doc_url":""}],
+  extraVouchers: [{"name":"Booking.com Voucher #1","doc_url":"https://drive.google.com/file/d/1dZDHrRkXpOx4h0PvqtRVpaQQVv-0vcuk/view?usp=drive_link","note":"אישור מ-Booking.com (1/2)"},{"name":"Booking.com Voucher #2","doc_url":"https://drive.google.com/file/d/1rRjIE3fWNyQCVe60GBkU0y0zEfaO7gfB/view?usp=drive_link","note":"אישור מ-Booking.com (2/2)"}]
+};
+
+const STATE = {
+  currentView: 'home',
+  selectedDay: 0,
+  prepDone: JSON.parse(localStorage.getItem('prepDone') || '{}'),
+  fxRate: JSON.parse(localStorage.getItem('fxRate') || 'null'),
+  weatherCache: JSON.parse(localStorage.getItem('weatherCache') || '{}'),
+  weatherCityOverride: null
+};
+
+function navigate(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const navBtn = document.querySelector('.nav-btn[data-view="' + view + '"]');
+  if (navBtn) navBtn.classList.add('active');
+  STATE.currentView = view;
+  window.scrollTo(0, 0);
+  if (view === 'home') renderHome();
+  if (view === 'itinerary') renderItinerary();
+  if (view === 'bookings') renderBookings();
+  if (view === 'contacts') renderContacts();
+  if (view === 'phrases') renderPhrases();
+  if (view === 'prep') renderPrep();
+  if (view === 'apps') renderApps();
+  if (view === 'tips') renderTips();
+  if (view === 'currency') renderCurrency();
+  if (view === 'weather') renderWeather();
+}
+
+function daysUntil(dateStr) {
+  const target = new Date(dateStr + 'T00:00:00');
+  const now = new Date();
+  now.setHours(0,0,0,0);
+  return Math.ceil((target - now) / (1000*60*60*24));
+}
+
+function getTripStatus() {
+  const daysToStart = daysUntil(TRIP.startDate);
+  const daysToEnd = daysUntil(TRIP.endDate);
+  if (daysToStart > 0) return { status: 'before', days: daysToStart, dayIdx: -1 };
+  if (daysToEnd < 0) return { status: 'after', days: -daysToEnd, dayIdx: -1 };
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const todayIdx = TRIP.days.findIndex(d => {
+    const [day, month] = d.date.split('.');
+    return '2026-' + month.padStart(2,'0') + '-' + day.padStart(2,'0') === todayStr;
+  });
+  return { status: 'during', days: 0, dayIdx: todayIdx >= 0 ? todayIdx : 0 };
+}
+
+function getLocation(key) { return TRIP.locations[key] || null; }
+
+function buildMapUrls(loc) {
+  if (!loc) return null;
+  // Use the most identifiable name (Korean preferred for Naver, English/local for Google)
+  const krName = loc.name_kr || '';
+  const enName = loc.name_en || loc.name || '';
+  const displayName = krName || enName;
+  const enQuery = encodeURIComponent(enName);
+  const krQuery = encodeURIComponent(krName || enName);
+
+  // GOOGLE MAPS: use search by name with coordinates as bias - shows place name in result
+  // Format: https://www.google.com/maps/search/?api=1&query=NAME&query_place_id=  (no place_id, but name+location helps)
+  // Better: combine name + coords for accurate result with name displayed
+  const googleSearchQuery = encodeURIComponent(enName + ' ' + loc.lat + ',' + loc.lng);
+  const googleViewUrl = 'https://www.google.com/maps/search/?api=1&query=' + googleSearchQuery;
+  // For directions, name in destination shows place name properly
+  const googleDirQuery = encodeURIComponent(enName);
+  const googleDriveUrl = 'https://www.google.com/maps/dir/?api=1&destination=' + googleDirQuery + '&destination_place_id=&travelmode=driving';
+  const googleWalkUrl = 'https://www.google.com/maps/dir/?api=1&destination=' + googleDirQuery + '&travelmode=walking';
+
+  // NAVER MAP: search for the Korean name - Naver knows Korean POIs perfectly
+  const naverWebUrl = 'https://map.naver.com/p/search/' + krQuery;
+
+  return {
+    naverWeb: naverWebUrl,
+    googleView: googleViewUrl,
+    googleDrive: googleDriveUrl,
+    googleWalk: googleWalkUrl
+  };
+}
+
+function navBtns(locKey) {
+  const loc = getLocation(locKey);
+  if (!loc) return '';
+  const urls = buildMapUrls(loc);
+  return '<div class="timeline-actions">' +
+    '<a class="nav-btn-mini primary" href="' + urls.naverWeb + '" target="_blank" rel="noopener">🗺️ Naver</a>' +
+    '<a class="nav-btn-mini" href="' + urls.googleView + '" target="_blank" rel="noopener">📍 הצג</a>' +
+    '<a class="nav-btn-mini" href="' + urls.googleDrive + '" target="_blank" rel="noopener">🚗 נהיגה</a>' +
+    '<a class="nav-btn-mini" href="' + urls.googleWalk + '" target="_blank" rel="noopener">🚶 רגלית</a>' +
+    '</div>';
+}
+
+function renderHome() {
+  if (typeof renderAlertsBanner === 'function') renderAlertsBanner();
+  if (typeof updateNavBadge === 'function') updateNavBadge();
+  const status = getTripStatus();
+  let html = '';
+  if (status.status === 'before') {
+    html += '<div class="hero"><div class="hero-title">הטיול מתחיל בעוד</div><div class="hero-count">' + status.days + '</div><div class="hero-sub">' + (status.days === 1 ? 'יום' : 'ימים') + ' │ ' + TRIP.startDate + '</div></div>';
+    document.getElementById('headerCountdown').innerHTML = '⏳ ' + status.days + ' ימים';
+  } else if (status.status === 'during') {
+    const day = TRIP.days[status.dayIdx];
+    html += '<div class="today-ribbon" onclick="navigate(\'itinerary\');setDay(' + status.dayIdx + ')"><div><div class="today-label">היום • יום ' + (status.dayIdx + 1) + ' מתוך ' + TRIP.days.length + '</div><div class="today-title">' + day.title + '</div></div><div style="font-size:28px;">→</div></div>';
+    document.getElementById('headerCountdown').innerHTML = '📍 יום ' + (status.dayIdx + 1);
+  } else {
+    html += '<div class="hero"><div class="hero-title">חזרתם הביתה לפני</div><div class="hero-count">' + status.days + '</div><div class="hero-sub">' + (status.days === 1 ? 'יום' : 'ימים') + ' - תזכרו יפה!</div></div>';
+    document.getElementById('headerCountdown').innerHTML = '✅ הסתיים';
+  }
+  document.getElementById('homeHero').innerHTML = html;
+  const total = TRIP.prep.length;
+  const done = Object.values(STATE.prepDone).filter(v => v).length;
+  document.getElementById('prepProgress').textContent = done + '/' + total + ' משימות הושלמו';
+}
+
+function setDay(idx) {
+  STATE.selectedDay = idx;
+  renderItinerary();
+}
+
+function renderItinerary() {
+  const scrollHtml = TRIP.days.map((d, i) => {
+    const today = getTripStatus().dayIdx === i;
+    const active = STATE.selectedDay === i;
+    return '<div class="day-chip ' + (active ? 'active' : '') + ' ' + (today && !active ? 'today' : '') + '" onclick="setDay(' + i + ')"><div class="day-chip-date">' + d.date + '</div><div class="day-chip-day">' + d.day_of_week + '</div></div>';
+  }).join('');
+  document.getElementById('dayScroll').innerHTML = scrollHtml;
+
+  const day = TRIP.days[STATE.selectedDay];
+  let html = '<div class="card"><div class="card-title">' + day.title + '</div><div class="card-subtitle">' + day.date + ' (' + day.day_of_week + ') • ' + day.location + '</div><div style="font-size:13px;color:var(--text-dim);margin-top:8px;">' + day.summary + '</div></div>';
+
+  html += '<div class="timeline">';
+  (day.items || []).forEach(item => {
+    html += '<div class="timeline-item type-' + (item.type || 'logistics') + '">' +
+      '<div class="timeline-time">' + item.time + '</div>' +
+      '<div class="timeline-content">' + item.activity + '</div>' +
+      (item.tip ? '<div class="timeline-tip">💡 ' + item.tip + '</div>' : '') +
+      (item.food_tip ? '<div class="timeline-tip">🍽️ ' + item.food_tip + '</div>' : '') +
+      (item.address ? '<div class="timeline-tip">📍 ' + item.address + '</div>' : '') +
+      (item.alt ? '<div class="timeline-tip">🔄 ' + item.alt + '</div>' : '') +
+      (item.note ? '<div class="timeline-tip">⚡ ' + item.note + '</div>' : '') +
+      (item.location_key ? navBtns(item.location_key) : '') +
+      '</div>';
+  });
+  html += '</div>';
+
+  if (day.notes && day.notes.length) {
+    html += '<div class="section-title">הערות</div>';
+    day.notes.forEach(n => {
+      let cls = 'note-box';
+      if (n.indexOf('🔴') >= 0) cls += ' critical';
+      else if (n.indexOf('⚠️') >= 0) cls += ' warning';
+      else if (n.indexOf('💡') >= 0) cls += ' success';
+      html += '<div class="' + cls + '">' + n + '</div>';
+    });
+  }
+
+  if (day.plan_a || day.plan_b) {
+    html += '<div class="section-title">אפשרויות היום</div>';
+    if (day.plan_a) {
+      html += '<details><summary><strong>' + day.plan_a.title + '</strong></summary><div class="details-body"><ul style="padding-right:20px;">';
+      day.plan_a.items.forEach(i => html += '<li style="margin-bottom:6px;">' + i + '</li>');
+      html += '</ul></div></details>';
+    }
+    if (day.plan_b) {
+      html += '<details><summary><strong>' + day.plan_b.title + '</strong></summary><div class="details-body"><ul style="padding-right:20px;">';
+      day.plan_b.items.forEach(i => html += '<li style="margin-bottom:6px;">' + i + '</li>');
+      html += '</ul></div></details>';
+    }
+  }
+
+  document.getElementById('dayContent').innerHTML = html;
+}
+
+function renderBookings() {
+  const hasDrive = TRIP.driveFolder && TRIP.driveFolder.length > 10;
+  document.getElementById('driveBanner').innerHTML = hasDrive ?
+    '<div class="card" style="border-color:var(--purple);background:#4C1D9522;"><div style="font-size:13px;line-height:1.6;">📁 <strong>תיקיית Google Drive</strong> עם כל מסמכי ההזמנות הפיזיים</div><div class="btn-row"><a class="btn primary" href="' + TRIP.driveFolder + '" target="_blank" rel="noopener">📂 פתח תיקייה</a></div></div>' :
+    '<div class="card" style="border-color:var(--amber);background:#3B2E1422;"><div style="font-size:13px;line-height:1.6;color:var(--amber);">⚠️ <strong>טרם חובר קישור ל-Google Drive.</strong><br>העלה את קבצי ההזמנות לתיקייה ב-Drive ושלח לי את הקישור - אוסיף אותו כאן ובכל כרטיס הזמנה.</div></div>';
+
+  let html = '';
+  TRIP.bookings.flights.forEach(f => {
+    // Per-passenger docs for Etihad, single doc for Jeju Air
+    let docBtns = '';
+    if (f.doc_url_ron || f.doc_url_hila) {
+      docBtns += f.doc_url_hila
+        ? '<a class="booking-doc-btn" href="' + f.doc_url_hila + '" target="_blank" rel="noopener">📄 הילה</a>'
+        : '<span class="booking-doc-btn empty">📄 הילה ─</span>';
+      docBtns += ' ';
+      docBtns += f.doc_url_ron
+        ? '<a class="booking-doc-btn" href="' + f.doc_url_ron + '" target="_blank" rel="noopener">📄 רון</a>'
+        : '<span class="booking-doc-btn empty">📄 רון ─</span>';
+    } else {
+      docBtns = f.doc_url
+        ? '<a class="booking-doc-btn" href="' + f.doc_url + '" target="_blank" rel="noopener">📄 מסמך</a>'
+        : '<span class="booking-doc-btn empty">📄 מסמך ─</span>';
+    }
+    html += '<div class="card">' +
+      '<div class="card-header"><div><div class="card-title">' + f.flight + '</div><div class="card-subtitle">' + f.route + '</div></div><div class="card-badge">' + f.date + '</div></div>' +
+      '<div style="font-size:13px;color:var(--text-dim);margin-top:6px;line-height:1.7;">' +
+      '🕐 ' + f.time + '<br>' +
+      '🎫 PNR הילה: <strong>' + f.pnr_hila + '</strong> │ PNR רון: <strong>' + f.pnr_ron + '</strong><br>' +
+      '💺 ' + f.seats + ' │ 🏢 ' + f.terminal +
+      '</div>' +
+      '<div class="btn-row">' + docBtns + '</div>' +
+      '</div>';
+  });
+  document.getElementById('flightsList').innerHTML = html;
+
+  html = '';
+  TRIP.bookings.hotels.forEach(h => {
+    const loc = getLocation(h.location_key);
+    const urls = loc ? buildMapUrls(loc) : null;
+    const docBtn = h.doc_url
+      ? '<a class="btn doc" href="' + h.doc_url + '" target="_blank" rel="noopener">📄 מסמך</a>'
+      : '<span class="btn doc" style="opacity:0.5;cursor:default;">📄 מסמך ─</span>';
+    html += '<div class="card">' +
+      '<div class="card-header"><div><div class="card-title">' + h.name + '</div><div class="card-subtitle">' + h.city + ' • ' + h.dates + '</div></div></div>' +
+      '<div style="font-size:13px;color:var(--text-dim);margin-top:6px;line-height:1.7;">' +
+      '📞 ' + h.phone + '<br>' +
+      '🎫 מס\' הזמנה: <strong>' + h.booking + '</strong><br>' +
+      '🕒 צ\'ק-אין ' + h.checkin + ' │ צ\'ק-אאוט ' + h.checkout +
+      '</div>' +
+      '<div class="btn-row">' +
+      '<a class="btn primary" href="tel:' + h.phone.replace(/\s/g,'') + '">📞 התקשר</a>' +
+      docBtn +
+      '</div>' +
+      (urls ? '<div class="btn-row">' +
+        '<a class="btn secondary" href="' + urls.naverWeb + '" target="_blank" rel="noopener">🗺️ Naver</a>' +
+        '<a class="btn secondary" href="' + urls.googleDrive + '" target="_blank" rel="noopener">🚗 Google</a>' +
+        '</div>' : '') +
+      '</div>';
+  });
+  document.getElementById('hotelsList').innerHTML = html;
+
+  html = '';
+  TRIP.bookings.cars.forEach(c => {
+    const docBtn = c.doc_url
+      ? '<a class="btn doc" href="' + c.doc_url + '" target="_blank" rel="noopener">📄 מסמך</a>'
+      : '<span class="btn doc" style="opacity:0.5;cursor:default;">📄 מסמך ─</span>';
+    html += '<div class="card">' +
+      '<div class="card-header"><div><div class="card-title">' + c.company + '</div><div class="card-subtitle">' + c.car + '</div></div></div>' +
+      '<div style="font-size:13px;color:var(--text-dim);margin-top:6px;line-height:1.7;">' +
+      '⬆️ איסוף: <strong>' + c.pickup + '</strong><br>' +
+      '⬇️ החזרה: <strong>' + c.return + '</strong><br>' +
+      '🎫 הזמנה: <strong>' + c.booking + '</strong><br>' +
+      '📞 ראשי: ' + c.phone + '<br>' +
+      '📞 חלופי: ' + c.phone_alt +
+      '</div>' +
+      '<div class="btn-row">' +
+      '<a class="btn primary" href="tel:' + c.phone.replace(/\s/g,'') + '">📞 ראשי</a>' +
+      '<a class="btn secondary" href="tel:' + c.phone_alt.replace(/\s/g,'') + '">📞 חלופי</a>' +
+      docBtn +
+      '</div>' +
+      '</div>';
+  });
+  document.getElementById('carsList').innerHTML = html;
+
+  html = '';
+  TRIP.conference.forEach(c => {
+    const docBtn = c.doc_url
+      ? '<a class="btn doc" href="' + c.doc_url + '" target="_blank" rel="noopener">📄 מסמך</a>'
+      : '<span class="btn doc" style="opacity:0.5;cursor:default;">📄 טרם נוסף</span>';
+    html += '<div class="card">' +
+      '<div class="card-header"><div><div class="card-title">' + c.title + '</div><div class="card-subtitle">' + c.dates + '</div></div></div>' +
+      '<div style="font-size:13px;color:var(--text-dim);margin-top:6px;line-height:1.7;">' + (c.note || '') + '</div>' +
+      '<div class="btn-row">' + docBtn + '</div>' +
+      '</div>';
+  });
+  document.getElementById('conferenceList').innerHTML = html;
+
+  // Extra vouchers (Booking.com duplicate PDFs)
+  html = '';
+  if (TRIP.extraVouchers && TRIP.extraVouchers.length) {
+    TRIP.extraVouchers.forEach(v => {
+      html += '<div class="card">' +
+        '<div class="card-header"><div><div class="card-title">' + v.name + '</div><div class="card-subtitle">' + (v.note || '') + '</div></div></div>' +
+        '<div class="btn-row"><a class="btn doc" href="' + v.doc_url + '" target="_blank" rel="noopener">📄 מסמך</a></div>' +
+        '</div>';
+    });
+  }
+  const evEl = document.getElementById('extraVouchersList');
+  if (evEl) evEl.innerHTML = html;
+}
+
+function renderContacts() {
+  const emergency = TRIP.emergency.filter(c => c.phone && c.phone !== 'השלם לפני יציאה');
+  let html = emergency.map(c => {
+    const phone = c.phone.replace(/\s/g, '');
+    const emCls = (c.name.indexOf('משטרה') >= 0 || c.name.indexOf('אמבולנס') >= 0) ? 'emergency' : '';
+    return '<a href="tel:' + phone + '" class="' + emCls + '"><div class="contact-name"><div class="contact-name-main">' + c.name + '</div><div class="contact-name-note">' + c.phone + (c.phone_emergency ? ' • חירום: ' + c.phone_emergency : '') + '</div></div><div class="contact-phone-icon">📞</div></a>';
+  }).join('');
+  document.getElementById('emergencyList').innerHTML = html;
+
+  html = '';
+  TRIP.bookings.hotels.forEach(h => {
+    const phone = h.phone.replace(/\s/g, '');
+    html += '<a href="tel:' + phone + '"><div class="contact-name"><div class="contact-name-main">' + h.name + '</div><div class="contact-name-note">' + h.city + ' • ' + h.phone + '</div></div><div class="contact-phone-icon">📞</div></a>';
+  });
+  TRIP.bookings.cars.forEach(c => {
+    const phone = c.phone.replace(/\s/g, '');
+    html += '<a href="tel:' + phone + '"><div class="contact-name"><div class="contact-name-main">' + c.company + '</div><div class="contact-name-note">רכב • ' + c.phone + '</div></div><div class="contact-phone-icon">📞</div></a>';
+  });
+  document.getElementById('hotelContactList').innerHTML = html;
+}
+
+function renderPhrases() {
+  const q = (document.getElementById('phraseSearch').value || '').toLowerCase();
+  const filtered = TRIP.phrases.filter(p =>
+    !q || p.he.toLowerCase().indexOf(q) >= 0 || (p.kr || '').indexOf(q) >= 0 || (p.use || '').toLowerCase().indexOf(q) >= 0
+  );
+  let html = filtered.map(p =>
+    '<div class="phrase">' +
+    '<div>' +
+    '<div class="phrase-he">' + p.he + '</div>' +
+    '<div class="phrase-kr">' + p.kr + '</div>' +
+    '<div class="phrase-romaji">' + p.romaji + '</div>' +
+    (p.use ? '<div class="phrase-use">💬 ' + p.use + '</div>' : '') +
+    '</div>' +
+    '<button class="phrase-btn" onclick="speak(\'' + p.kr.replace(/'/g, "\\'") + '\')" title="השמע">🔊</button>' +
+    '</div>'
+  ).join('');
+  document.getElementById('phrasesList').innerHTML = html;
+}
+
+function speak(text) {
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ko-KR';
+    u.rate = 0.85;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  } else {
+    alert('הדפדפן לא תומך בהשמעה קולית');
+  }
+}
+
+function renderPrep() {
+  let html = TRIP.prep.map((item, i) => {
+    const done = STATE.prepDone[i] || false;
+    return '<div class="checkbox-item ' + (done ? 'done' : '') + '"><input type="checkbox" id="prep-' + i + '" ' + (done ? 'checked' : '') + ' onchange="togglePrep(' + i + ')"><label for="prep-' + i + '"><div style="font-weight:500;">' + item.task + '</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">' + (item.deadline ? '⏰ ' + item.deadline + ' • ' : '') + (item.note || '') + '</div></label></div>';
+  }).join('');
+  document.getElementById('prepList').innerHTML = html;
+}
+
+function togglePrep(i) {
+  STATE.prepDone[i] = !STATE.prepDone[i];
+  localStorage.setItem('prepDone', JSON.stringify(STATE.prepDone));
+  renderPrep();
+  renderHome();
+  if (typeof updateNavBadge === 'function') updateNavBadge();
+  if (typeof renderAlertsBanner === 'function') renderAlertsBanner();
+}
+
+function renderApps() {
+  let html = TRIP.apps.map(a => {
+    const priority = a.priority.indexOf('חובה') >= 0 ? 'important' : '';
+    return '<div class="card"><div class="card-header"><div><div class="card-title">' + a.name + '</div><div class="card-subtitle">' + a.purpose + '</div></div></div><div class="chip-row"><span class="chip ' + priority + '">' + a.priority + '</span>' + (a.note ? '<span class="chip">' + a.note + '</span>' : '') + '</div></div>';
+  }).join('');
+  document.getElementById('appsList').innerHTML = html;
+}
+
+function renderTips() {
+  const html = TRIP.tips.map(t => '<details><summary>' + t.emoji + ' ' + t.title + '</summary><div class="details-body">' + t.body + '</div></details>').join('');
+  document.getElementById('tipsList').innerHTML = html;
+}
+
+/* ============ CURRENCY ============ */
+async function fetchFxRate() {
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/ILS');
+    if (!res.ok) throw new Error('fetch failed');
+    const data = await res.json();
+    if (data && data.rates && data.rates.KRW) {
+      const rate = {
+        date: new Date().toISOString().slice(0, 10),
+        ilsToKrw: data.rates.KRW,
+        fetched: Date.now()
+      };
+      STATE.fxRate = rate;
+      localStorage.setItem('fxRate', JSON.stringify(rate));
+      return rate;
+    }
+  } catch (e) {
+    // Silent fail - API may be blocked in sandbox/iframe previews; fallback rate (377) is used
+  }
+  return STATE.fxRate;
+}
+
+function renderCurrency() {
+  const cached = STATE.fxRate;
+  const fallbackRate = 377;
+  const rate = (cached && cached.ilsToKrw) || fallbackRate;
+  const isStale = !cached || (Date.now() - (cached.fetched || 0)) > 24 * 60 * 60 * 1000;
+  const dateLabel = cached ? cached.date : 'שער ברירת מחדל';
+
+  document.getElementById('currencyBox').innerHTML =
+    '<div class="currency-box">' +
+    '<div class="currency-rate-row"><span class="currency-rate-label">שער ' + dateLabel + '</span><span class="currency-rate-value ' + (isStale ? 'stale' : '') + '">1 ₪ = ' + rate.toFixed(2) + ' ₩</span></div>' +
+    '<div class="currency-input-group active"><label>שקל</label><input type="number" class="currency-input" id="ilsInput" placeholder="0" inputmode="decimal"><span class="currency-symbol">₪</span></div>' +
+    '<div class="currency-swap"><button onclick="renderCurrency()">⇅</button></div>' +
+    '<div class="currency-input-group"><label>וון</label><input type="number" class="currency-input" id="krwInput" placeholder="0" inputmode="decimal"><span class="currency-symbol">₩</span></div>' +
+    '<div class="quick-amounts">' +
+    '<button class="quick-amount-btn" onclick="setIls(50)">50 ₪</button>' +
+    '<button class="quick-amount-btn" onclick="setIls(100)">100 ₪</button>' +
+    '<button class="quick-amount-btn" onclick="setIls(200)">200 ₪</button>' +
+    '<button class="quick-amount-btn" onclick="setIls(500)">500 ₪</button>' +
+    '<button class="quick-amount-btn" onclick="setKrw(5000)">5K ₩</button>' +
+    '<button class="quick-amount-btn" onclick="setKrw(10000)">10K ₩</button>' +
+    '<button class="quick-amount-btn" onclick="setKrw(50000)">50K ₩</button>' +
+    '<button class="quick-amount-btn" onclick="setKrw(100000)">100K ₩</button>' +
+    '</div>' +
+    (isStale ? '<div class="note-box warning" style="margin-top:14px;">⚠️ שער לא מעודכן - מחובר לאינטרנט? רענן כדי לעדכן</div>' : '') +
+    '</div>';
+
+  const ilsInput = document.getElementById('ilsInput');
+  const krwInput = document.getElementById('krwInput');
+  ilsInput.addEventListener('input', () => {
+    const v = parseFloat(ilsInput.value);
+    krwInput.value = isFinite(v) ? Math.round(v * rate) : '';
+  });
+  krwInput.addEventListener('input', () => {
+    const v = parseFloat(krwInput.value);
+    ilsInput.value = isFinite(v) ? (v / rate).toFixed(2) : '';
+  });
+
+  if (isStale) fetchFxRate().then(r => { if (r && r.ilsToKrw !== rate) renderCurrency(); });
+}
+
+window.setIls = function(v) {
+  const el = document.getElementById('ilsInput');
+  el.value = v;
+  el.dispatchEvent(new Event('input'));
+};
+window.setKrw = function(v) {
+  const el = document.getElementById('krwInput');
+  el.value = v;
+  el.dispatchEvent(new Event('input'));
+};
+
+/* ============ WEATHER ============ */
+const WEATHER_CITIES = {
+  seoul: { lat: 37.5665, lng: 126.9780, name: 'סיאול' },
+  sokcho: { lat: 38.2070, lng: 128.5918, name: 'סוקצ\'ו' },
+  incheon: { lat: 37.4563, lng: 126.7052, name: 'אינצ\'ון' },
+  jeju: { lat: 33.4996, lng: 126.5312, name: 'ג\'ג\'ו' }
+};
+
+function getCurrentCity() {
+  if (STATE.weatherCityOverride) return STATE.weatherCityOverride;
+  const status = getTripStatus();
+  if (status.status !== 'during') return 'seoul';
+  const day = TRIP.days[status.dayIdx];
+  const loc = (day.location || '').toLowerCase();
+  if (loc.indexOf('סוקצ') >= 0) return 'sokcho';
+  if (loc.indexOf('אינצ') >= 0 || loc.indexOf('מואוידו') >= 0 || loc.indexOf('dmz') >= 0) return 'incheon';
+  if (loc.indexOf('ג\'ג') >= 0 || loc.indexOf('jeju') >= 0) return 'jeju';
+  return 'seoul';
+}
+
+function weatherIcon(code) {
+  if (code === 0) return '☀️';
+  if (code <= 3) return '⛅';
+  if (code <= 48) return '🌫️';
+  if (code <= 57) return '🌦️';
+  if (code <= 67) return '🌧️';
+  if (code <= 77) return '🌨️';
+  if (code <= 82) return '🌧️';
+  if (code <= 86) return '🌨️';
+  if (code <= 99) return '⛈️';
+  return '🌤️';
+}
+
+function weatherDesc(code) {
+  if (code === 0) return 'בהיר';
+  if (code === 1) return 'בהיר בעיקר';
+  if (code === 2) return 'עננים חלקיים';
+  if (code === 3) return 'מעונן';
+  if (code <= 48) return 'ערפילי';
+  if (code <= 57) return 'טפטוף קל';
+  if (code <= 63) return 'גשם קל';
+  if (code <= 67) return 'גשם';
+  if (code <= 82) return 'ממטרים';
+  if (code <= 86) return 'שלג';
+  if (code <= 99) return 'סופה';
+  return 'משתנה';
+}
+
+async function fetchWeather(city) {
+  const c = WEATHER_CITIES[city];
+  const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + c.lat + '&longitude=' + c.lng + '&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=7';
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('fetch failed');
+    const data = await res.json();
+    const weather = { city: city, data: data, fetched: Date.now() };
+    STATE.weatherCache[city] = weather;
+    localStorage.setItem('weatherCache', JSON.stringify(STATE.weatherCache));
+    return weather;
+  } catch (e) {
+    // Silent fail - API may be blocked in sandbox/iframe previews
+    return STATE.weatherCache[city] || null;
+  }
+}
+
+async function renderWeather() {
+  const city = getCurrentCity();
+  const container = document.getElementById('weatherContent');
+
+  const selector = Object.keys(WEATHER_CITIES).map(c =>
+    '<button class="nav-btn-mini ' + (c === city ? 'primary' : '') + '" onclick="showWeatherCity(\'' + c + '\')">' + WEATHER_CITIES[c].name + '</button>'
+  ).join(' ');
+  const selectorHtml = '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">' + selector + '</div>';
+
+  container.innerHTML = selectorHtml + '<div class="weather-loading">⏳ טוען תחזית...</div>';
+
+  let weather = STATE.weatherCache[city];
+  const isFresh = weather && (Date.now() - weather.fetched < 3 * 60 * 60 * 1000);
+
+  if (!isFresh) weather = (await fetchWeather(city)) || weather;
+
+  if (!weather) {
+    container.innerHTML = selectorHtml +
+      '<div class="weather-card">' +
+      '<div class="weather-location">' + WEATHER_CITIES[city].name + '</div>' +
+      '<div class="weather-desc">תחזית לא זמינה (אין אינטרנט)</div>' +
+      '<div class="weather-details">' +
+      '<div class="weather-detail"><div class="weather-detail-label">טיפוסי</div><div class="weather-detail-value">22-28°C</div></div>' +
+      '<div class="weather-detail"><div class="weather-detail-label">לחות</div><div class="weather-detail-value">75-85%</div></div>' +
+      '<div class="weather-detail"><div class="weather-detail-label">גשם</div><div class="weather-detail-value">40-60%</div></div>' +
+      '</div></div>' +
+      '<div class="note-box warning">🌧️ <strong>Jangma (עונת גשמים):</strong> יוני-יולי בקוריאה = אפשרי גשם יומיומי קצר. ג\'ג\'ו גשום יותר ועלול להיות טייפון.</div>';
+    return;
+  }
+
+  const data = weather.data;
+  const cur = data.current;
+  const forecast = data.daily;
+  const cityInfo = WEATHER_CITIES[city];
+
+  let html = selectorHtml +
+    '<div class="weather-card">' +
+    '<div class="weather-location">📍 ' + cityInfo.name + '</div>' +
+    '<div class="weather-current">' +
+    '<div class="weather-icon">' + weatherIcon(cur.weather_code) + '</div>' +
+    '<div><div class="weather-temp">' + Math.round(cur.temperature_2m) + '°</div><div class="weather-desc">' + weatherDesc(cur.weather_code) + '</div></div>' +
+    '</div>' +
+    '<div class="weather-details">' +
+    '<div class="weather-detail"><div class="weather-detail-label">לחות</div><div class="weather-detail-value">' + cur.relative_humidity_2m + '%</div></div>' +
+    '<div class="weather-detail"><div class="weather-detail-label">רוח</div><div class="weather-detail-value">' + Math.round(cur.wind_speed_10m) + ' ק"מ/ש</div></div>' +
+    '<div class="weather-detail"><div class="weather-detail-label">גשם היום</div><div class="weather-detail-value">' + forecast.precipitation_probability_max[0] + '%</div></div>' +
+    '</div></div>' +
+    '<div class="section-title">תחזית 7 ימים</div>' +
+    '<div class="weather-forecast">';
+
+  const daysHe = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+  forecast.time.forEach((date, i) => {
+    const d = new Date(date);
+    const label = i === 0 ? 'היום' : daysHe[d.getDay()];
+    html += '<div class="forecast-day">' +
+      '<div class="forecast-day-label">' + label + '</div>' +
+      '<div class="forecast-day-icon">' + weatherIcon(forecast.weather_code[i]) + '</div>' +
+      '<div class="forecast-day-temp">' + Math.round(forecast.temperature_2m_max[i]) + '° <span class="min">' + Math.round(forecast.temperature_2m_min[i]) + '°</span></div>' +
+      '<div style="font-size:10px;color:var(--accent-2);margin-top:3px;">💧 ' + forecast.precipitation_probability_max[i] + '%</div>' +
+      '</div>';
+  });
+  html += '</div>';
+
+  const age = Math.floor((Date.now() - weather.fetched) / (1000 * 60));
+  if (age > 60) {
+    html += '<div class="note-box warning" style="margin-top:14px;">⚠️ תחזית התקבלה לפני ' + age + ' דקות</div>';
+  }
+
+  container.innerHTML = html;
+}
+
+window.showWeatherCity = function(city) {
+  STATE.weatherCityOverride = city;
+  renderWeather();
+};
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', function() {
+  // Set logo once (shared between splash and header)
+  const LOGO = 'data:image/jpeg;base64,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';
+  const splashLogo = document.getElementById('splashLogo');
+  const headerLogo = document.getElementById('headerLogo');
+  if (splashLogo) splashLogo.src = LOGO;
+  if (headerLogo) headerLogo.src = LOGO;
+
+  document.getElementById('phraseSearch').addEventListener('input', renderPhrases);
+  const status = getTripStatus();
+  if (status.dayIdx >= 0) STATE.selectedDay = status.dayIdx;
+  renderHome();
+  fetchFxRate();
+  // Notifications
+  if (typeof updateNavBadge === 'function') updateNavBadge();
+  if (typeof fireDueSystemNotifications === 'function') {
+    setTimeout(fireDueSystemNotifications, 1200);
+  }
+  // Splash screen: show once per session, then hide
+  const splash = document.getElementById('splash');
+  if (splash) {
+    const splashShown = sessionStorage.getItem('splashShown');
+    if (splashShown) {
+      splash.classList.add('instant-hide');
+    } else {
+      sessionStorage.setItem('splashShown', '1');
+      // Remove splash from DOM after animation completes (2.2s)
+      setTimeout(function() {
+        if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+      }, 2400);
+    }
+  }
+});
+
+/* ============ SW ============ */
+if ('serviceWorker' in navigator) {
+  const swCode = "const CACHE='korea-2026-v2';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.add('/')));self.skipWaiting();});self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(url.hostname.indexOf('open-meteo')>=0||url.hostname.indexOf('er-api')>=0)return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{const copy=resp.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return resp;}).catch(()=>caches.match('/'))));});";
+  const blob = new Blob([swCode], {type: 'application/javascript'});
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
+
+/* ============ NOTIFICATIONS SYSTEM ============ */
+
+// Parse dd.mm.yyyy into Date
+function parseDate(str) {
+  if (!str) return null;
+  const parts = str.split('.');
+  if (parts.length !== 3) return null;
+  return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+}
+
+// Days between today and date (negative = past)
+function daysDiff(targetDate) {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const target = new Date(targetDate);
+  target.setHours(0, 0, 0, 0);
+  return Math.round((target - now) / (1000 * 60 * 60 * 24));
+}
+
+// Get active alerts for today: prep tasks that are overdue, due today, or within notify window
+function getActiveAlerts() {
+  const alerts = [];
+  const dismissed = JSON.parse(localStorage.getItem('alertsDismissed') || '{}');
+
+  // Prep tasks
+  TRIP.prep.forEach((task, i) => {
+    if (STATE.prepDone[i]) return; // skip completed
+    if (!task.notify) return; // skip non-notifying
+    const deadline = parseDate(task.deadline);
+    if (!deadline) return;
+    const days = daysDiff(deadline);
+    const window = task.notify_days_before || 3;
+    if (days < -7) return; // too old, skip
+    if (days > window) return; // too far ahead, skip
+
+    const dismissKey = `prep-${i}`;
+    if (dismissed[dismissKey] === task.deadline) return; // user dismissed for this deadline
+
+    let level = 'info';
+    let label = '';
+    if (days < 0) { level = 'critical'; label = `פספסת לפני ${-days} ימים!`; }
+    else if (days === 0) { level = 'critical'; label = 'היום!'; }
+    else if (days === 1) { level = 'warning'; label = 'מחר!'; }
+    else { level = 'warning'; label = `בעוד ${days} ימים`; }
+
+    alerts.push({
+      type: 'prep',
+      index: i,
+      level: level,
+      title: label,
+      body: task.task,
+      note: task.note,
+      deadline: task.deadline,
+      dismissKey: dismissKey,
+      priority: days < 0 ? 100 : (7 - days)
+    });
+  });
+
+  // Sort: most urgent first
+  alerts.sort((a, b) => b.priority - a.priority);
+  return alerts;
+}
+
+function renderAlertsBanner() {
+  const alerts = getActiveAlerts();
+  const container = document.getElementById('alertsBanner');
+  if (!container) return;
+
+  if (alerts.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  // Show permission prompt first if not asked yet
+  let html = '';
+  const permState = 'Notification' in window ? Notification.permission : 'unsupported';
+  const permAsked = localStorage.getItem('notifAsked') === '1';
+  if (permState === 'default' && !permAsked) {
+    html += `<div class="notif-permission-prompt">
+      <div class="title">🔔 רוצה לקבל התראות?</div>
+      <div class="sub">האפליקציה תזכיר לך משימות חשובות (check-in, DMZ tour, eSIM) בזמן הנכון.</div>
+      <div class="actions">
+        <button class="btn primary" onclick="enableNotifications()">אפשר</button>
+        <button class="btn secondary" onclick="dismissPermissionPrompt()">לא עכשיו</button>
+      </div>
+    </div>`;
+  }
+
+  // Show top 3 alerts
+  alerts.slice(0, 3).forEach(a => {
+    const bannerClass = a.level === 'critical' ? '' : (a.level === 'warning' ? ' warning' : ' info');
+    html += `
+      <div class="alert-banner${bannerClass}">
+        <button class="alert-dismiss" onclick="dismissAlert('${a.dismissKey}','${a.deadline}')">✕</button>
+        <div class="alert-banner-title">⏰ ${a.title}</div>
+        <div class="alert-banner-body">${a.body}</div>
+        ${a.note ? `<div class="alert-banner-sub">${a.note}</div>` : ''}
+        <div class="alert-banner-action">
+          <button onclick="togglePrep(${a.index});renderAlertsBanner();updateNavBadge();">✓ בוצע</button>
+          <button onclick="navigate('prep')">פתח צ'קליסט</button>
+        </div>
+      </div>`;
+  });
+
+  if (alerts.length > 3) {
+    html += `<div class="note-box warning">+ ${alerts.length - 3} משימות נוספות - <a href="#" onclick="navigate('prep');return false;" style="color:var(--accent);">פתח צ'קליסט</a></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function dismissAlert(key, deadline) {
+  const dismissed = JSON.parse(localStorage.getItem('alertsDismissed') || '{}');
+  dismissed[key] = deadline;
+  localStorage.setItem('alertsDismissed', JSON.stringify(dismissed));
+  renderAlertsBanner();
+  updateNavBadge();
+}
+
+function dismissPermissionPrompt() {
+  localStorage.setItem('notifAsked', '1');
+  renderAlertsBanner();
+}
+
+async function enableNotifications() {
+  localStorage.setItem('notifAsked', '1');
+  if (!('Notification' in window)) {
+    alert('הדפדפן לא תומך בהתראות');
+    renderAlertsBanner();
+    return;
+  }
+  const perm = await Notification.requestPermission();
+  if (perm === 'granted') {
+    updateNotifBtn();
+    // Fire a welcome notification
+    try {
+      new Notification('🇰🇷 התראות הופעלו', {
+        body: 'נזכיר לך משימות חשובות לפני הטיול',
+        icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgZmlsbD0iIzBGMTcyQSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMzAiIGZvbnQtc2l6ZT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn4e/8J-HtzwvdGV4dD48L3N2Zz4='
+      });
+    } catch (e) {}
+    fireDueSystemNotifications();
+  } else {
+    updateNotifBtn();
+  }
+  renderAlertsBanner();
+}
+
+function toggleNotifications() {
+  if (!('Notification' in window)) {
+    alert('הדפדפן לא תומך בהתראות');
+    return;
+  }
+  const perm = Notification.permission;
+  if (perm === 'granted') {
+    alert('התראות מופעלות ✓\n\nלביטול: הגדרות האתר בדפדפן → Notifications');
+  } else if (perm === 'denied') {
+    alert('התראות חסומות.\n\nלהפעלה: לחץ על 🔒 ליד כתובת האתר → Notifications → Allow');
+  } else {
+    enableNotifications();
+  }
+}
+
+function updateNotifBtn() {
+  const btn = document.getElementById('notifBtn');
+  if (!btn) return;
+  const perm = 'Notification' in window ? Notification.permission : 'unsupported';
+  btn.className = 'notif-btn';
+  if (perm === 'granted') {
+    btn.classList.add('enabled');
+    btn.innerHTML = '🔔';
+  } else if (perm === 'denied') {
+    btn.classList.add('denied');
+    btn.innerHTML = '🔕';
+  } else {
+    btn.innerHTML = '🔔';
+  }
+  const alerts = getActiveAlerts();
+  if (alerts.length > 0) {
+    btn.innerHTML += `<span class="notif-count">${alerts.length}</span>`;
+  }
+}
+
+function updateNavBadge() {
+  const btn = document.querySelector('.nav-btn[data-view="home"]');
+  if (!btn) return;
+  const existing = btn.querySelector('.nav-btn-badge');
+  if (existing) existing.remove();
+  const alerts = getActiveAlerts();
+  if (alerts.length > 0) {
+    const badge = document.createElement('span');
+    badge.className = 'nav-btn-badge';
+    badge.textContent = String(alerts.length);
+    btn.appendChild(badge);
+  }
+  updateNotifBtn();
+}
+
+// Fire system notifications for tasks due in 0-1 days (once per deadline)
+function fireDueSystemNotifications() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const fired = JSON.parse(localStorage.getItem('notifFired') || '{}');
+  let anyFired = false;
+  TRIP.prep.forEach((task, i) => {
+    if (STATE.prepDone[i]) return;
+    if (!task.notify) return;
+    const deadline = parseDate(task.deadline);
+    if (!deadline) return;
+    const days = daysDiff(deadline);
+    if (days > 1 || days < -1) return; // only fire for today/tomorrow/yesterday
+    const key = `${i}-${task.deadline}`;
+    if (fired[key]) return;
+    try {
+      let title = '';
+      if (days < 0) title = `⚠️ פספסת משימה!`;
+      else if (days === 0) title = `⏰ היום: deadline!`;
+      else title = `📅 מחר: deadline!`;
+      new Notification(title, {
+        body: task.task + (task.note ? '\n' + task.note : ''),
+        icon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgZmlsbD0iIzBGMTcyQSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMzAiIGZvbnQtc2l6ZT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7wn4e/8J-HtzwvdGV4dD48L3N2Zz4=',
+        tag: key
+      });
+      fired[key] = Date.now();
+      anyFired = true;
+    } catch (e) { console.warn('notif failed', e); }
+  });
+  if (anyFired) localStorage.setItem('notifFired', JSON.stringify(fired));
+}
+
+</script>
+</body>
+</html>
