@@ -590,9 +590,9 @@ details summary { font-size: 16px !important; padding: 14px 16px !important; }
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
     <span>מטבע</span>
   </button>
-  <button class="nav-btn" data-view="contacts" onclick="navigate('contacts')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg>
-    <span>חירום</span>
+  <button class="nav-btn" data-view="prep" onclick="navigate('prep');setTimeout(()=>switchPrepTab('packing'),100)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+    <span>מה לקחת</span>
   </button>
   <button class="nav-btn" data-view="cosmetics" onclick="navigate('cosmetics')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.7 3 6.1V20a1 1 0 001 1h6a1 1 0 001-1v-4.9c1.8-1.4 3-3.6 3-6.1 0-4-3-7-7-7z"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
@@ -649,7 +649,15 @@ function navigate(view) {
   STATE.currentView = view;
   window.scrollTo(0, 0);
   if (view === 'home') renderHome();
-  if (view === 'itinerary') renderItinerary();
+  if (view === 'itinerary') {
+    renderItinerary();
+    // Pre-fetch weather for current day city and refresh
+    const day = TRIP.days[STATE.selectedDay];
+    const cityKey = getDayCityKey(day);
+    if (!STATE.weatherCache[cityKey]) {
+      fetchWeather(cityKey).then(() => renderItinerary());
+    }
+  }
   if (view === 'bookings') renderBookings();
   if (view === 'contacts') renderContacts();
   if (view === 'phrases') renderPhrases();
@@ -761,9 +769,49 @@ function renderHome() {
 function setDay(idx) {
   STATE.selectedDay = idx;
   renderItinerary();
+  const day = TRIP.days[idx];
+  const cityKey = getDayCityKey(day);
+  if (!STATE.weatherCache[cityKey]) {
+    fetchWeather(cityKey).then(() => renderItinerary());
+  }
+}
+
+function getDayCityKey(day) {
+  const loc = (day.location || '').toLowerCase();
+  if (loc.indexOf('סוקצ') >= 0) return 'sokcho';
+  if (loc.indexOf('אינצ') >= 0 || loc.indexOf('מואוידו') >= 0 || loc.indexOf('dmz') >= 0) return 'incheon';
+  if (loc.indexOf('ג\'ג') >= 0 || loc.indexOf('jeju') >= 0) return 'jeju';
+  return 'seoul';
+}
+
+function getDayWeatherHtml(day) {
+  const cityKey = getDayCityKey(day);
+  const weather = STATE.weatherCache && STATE.weatherCache[cityKey];
+  if (!weather || !weather.daily) return '';
+  // Find the index of this day in the forecast
+  const tripStart = new Date('2026-06-17');
+  const parts = day.date.split('.');
+  const dayDate = new Date(2026, parseInt(parts[1]) - 1, parseInt(parts[0]));
+  const diffDays = Math.round((dayDate - new Date()) / (1000 * 60 * 60 * 24));
+  if (diffDays < 0 || diffDays >= (weather.daily.time || []).length) return '';
+  const idx = diffDays;
+  const codes = weather.daily.weather_code;
+  const maxT = weather.daily.temperature_2m_max;
+  const minT = weather.daily.temperature_2m_min;
+  const rain = weather.daily.precipitation_probability_max;
+  if (!codes || idx >= codes.length) return '';
+  const icon = weatherIcon(codes[idx]);
+  const desc = weatherDesc(codes[idx]);
+  const rainPct = rain ? rain[idx] : 0;
+  return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border-radius:10px;margin-top:10px;font-size:13px;">' +
+    '<span style="font-size:22px;">' + icon + '</span>' +
+    '<div><div style="font-weight:600;color:var(--text);">' + Math.round(maxT[idx]) + '°/' + Math.round(minT[idx]) + '° · ' + desc + '</div>' +
+    '<div style="color:var(--text-dim);">גשם ' + rainPct + '% · ' + WEATHER_CITIES[cityKey].name + '</div></div>' +
+    '</div>';
 }
 
 function renderItinerary() {
+
   const scrollHtml = TRIP.days.map((d, i) => {
     const today = getTripStatus().dayIdx === i;
     const active = STATE.selectedDay === i;
@@ -772,7 +820,7 @@ function renderItinerary() {
   document.getElementById('dayScroll').innerHTML = scrollHtml;
 
   const day = TRIP.days[STATE.selectedDay];
-  let html = '<div class="card"><div class="card-title">' + day.title + '</div><div class="card-subtitle">' + day.date + ' (' + day.day_of_week + ') • ' + day.location + '</div><div style="font-size:13px;color:var(--text-dim);margin-top:8px;">' + day.summary + '</div></div>';
+  let html = '<div class="card"><div class="card-title">' + day.title + '</div><div class="card-subtitle">' + day.date + ' (' + day.day_of_week + ') • ' + day.location + '</div><div style="font-size:13px;color:var(--text-dim);margin-top:8px;">' + day.summary + '</div>' + getDayWeatherHtml(day) + '</div>';
 
   // Inject cosmetics nearby card if relevant
   const cosmeticsNearby = getCosmeticsForDay(day.date);
