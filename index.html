@@ -268,6 +268,12 @@ details .details-body { padding:0 14px 14px; color:var(--text-dim); font-size:13
 .packing-input { flex:1; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:11px 14px; color:var(--text); font-family:inherit; font-size:15px; outline:none; }
 .packing-input:focus { border-color:var(--accent); }
 .packing-add-btn { background:var(--accent); border:none; color:#fff; width:46px; height:46px; border-radius:var(--radius-sm); font-size:22px; cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.owner-btn { padding:5px 12px; border-radius:20px; border:1px solid var(--border); background:var(--surface); color:var(--text-dim); font-size:13px; cursor:pointer; transition:all .2s; }
+.owner-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.packing-owner-tag { font-size:11px; padding:2px 7px; border-radius:10px; margin-right:6px; font-weight:600; display:inline-block; }
+.packing-owner-tag.ron { background:#3a6bc4; color:#fff; }
+.packing-owner-tag.hila { background:#b04a8a; color:#fff; }
+.packing-owner-tag.both { background:#4a7c59; color:#fff; }
 .packing-add-btn:active { transform:scale(0.95); }
 .packing-progress { font-size:13px; color:var(--text-dim); margin-bottom:12px; padding:8px 12px; background:var(--surface); border-radius:var(--radius-sm); display:flex; justify-content:space-between; align-items:center; }
 .packing-progress-bar { height:4px; background:var(--border); border-radius:2px; margin-top:6px; overflow:hidden; }
@@ -550,12 +556,22 @@ details summary { font-size: 16px !important; padding: 14px 16px !important; }
       <input class="packing-input" id="packingInput" type="text" placeholder="הוסף פריט לחבילה..." dir="auto" onkeydown="if(event.key==='Enter')addPackingItem()">
       <button class="packing-add-btn" onclick="addPackingItem()">+</button>
     </div>
+    <div style="display:flex;gap:6px;margin:10px 0 4px;justify-content:flex-end;">
+      <button onclick="setPackingOwner('both')" id="ownerBoth" class="owner-btn active">שנינו</button>
+      <button onclick="setPackingOwner('הילה')" id="ownerHila" class="owner-btn">הילה</button>
+      <button onclick="setPackingOwner('רון')" id="ownerRon" class="owner-btn">רון</button>
+    </div>
     <div class="packing-progress" id="packingProgress">
       <span>0/0 פריטים ארוזים</span>
       <span id="packingProgressPct">0%</span>
     </div>
     <div class="packing-progress-bar"><div class="packing-progress-fill" id="packingProgressFill" style="width:0%"></div></div>
-    <div style="margin-top:12px;" id="packingList"></div>
+    <div style="display:flex;gap:6px;margin:10px 0 6px;justify-content:flex-end;">
+      <button onclick="setPackingFilter('all')" id="filterAll" class="owner-btn active">הכל</button>
+      <button onclick="setPackingFilter('הילה')" id="filterHila" class="owner-btn">הילה</button>
+      <button onclick="setPackingFilter('רון')" id="filterRon" class="owner-btn">רון</button>
+    </div>
+    <div style="margin-top:4px;" id="packingList"></div>
   </div>
 </section>
 
@@ -1455,12 +1471,32 @@ function switchPrepTab(tab) {
 
 /* ============ PACKING LIST ============ */
 window.PACKING_ITEMS = window.PACKING_ITEMS || [];
+window.PACKING_OWNER = 'both';
+window.PACKING_FILTER = 'all';
+
+function setPackingOwner(owner) {
+  window.PACKING_OWNER = owner;
+  document.querySelectorAll('#ownerRon,#ownerHila,#ownerBoth').forEach(b => b.classList.remove('active'));
+  if (owner === 'רון') document.getElementById('ownerRon').classList.add('active');
+  else if (owner === 'הילה') document.getElementById('ownerHila').classList.add('active');
+  else document.getElementById('ownerBoth').classList.add('active');
+}
+
+function setPackingFilter(filter) {
+  window.PACKING_FILTER = filter;
+  document.querySelectorAll('#filterAll,#filterRon,#filterHila').forEach(b => b.classList.remove('active'));
+  if (filter === 'רון') document.getElementById('filterRon').classList.add('active');
+  else if (filter === 'הילה') document.getElementById('filterHila').classList.add('active');
+  else document.getElementById('filterAll').classList.add('active');
+  renderPackingList();
+}
 
 function addPackingItem() {
   const input = document.getElementById('packingInput');
   const text = (input.value || '').trim();
   if (!text) return;
-  const item = { id: Date.now().toString(), text: text, packed: false };
+  const owner = window.PACKING_OWNER || 'both';
+  const item = { id: Date.now().toString(), text: text, packed: false, owner: owner };
   window.PACKING_ITEMS = [...window.PACKING_ITEMS, item];
   input.value = '';
   renderPackingList();
@@ -1482,7 +1518,10 @@ function deletePackingItem(id) {
 }
 
 function renderPackingList() {
-  const items = window.PACKING_ITEMS || [];
+  const allItems = window.PACKING_ITEMS || [];
+  const filter = window.PACKING_FILTER || 'all';
+  const items = filter === 'all' ? allItems : allItems.filter(i => (i.owner || 'both') === filter || (i.owner || 'both') === 'both');
+
   const packed = items.filter(i => i.packed).length;
   const total = items.length;
   const pct = total > 0 ? Math.round(packed / total * 100) : 0;
@@ -1497,20 +1536,30 @@ function renderPackingList() {
   const listEl = document.getElementById('packingList');
   if (!listEl) return;
 
-  if (total === 0) {
+  if (allItems.length === 0) {
     listEl.innerHTML = '<div class="packing-empty">🧳 הרשימה ריקה<br><span style="font-size:12px;margin-top:6px;display:block;">הוסף פריטים למעלה</span></div>';
     return;
   }
+  if (items.length === 0) {
+    listEl.innerHTML = '<div class="packing-empty">אין פריטים לסינון זה</div>';
+    return;
+  }
 
-  // Not packed first, then packed
   const unpacked = items.filter(i => !i.packed);
   const packedItems = items.filter(i => i.packed);
   const sorted = [...unpacked, ...packedItems];
 
+  const ownerTag = (owner) => {
+    if (!owner || owner === 'both') return '<span class="packing-owner-tag both">שנינו</span>';
+    if (owner === 'רון') return '<span class="packing-owner-tag ron">רון</span>';
+    if (owner === 'הילה') return '<span class="packing-owner-tag hila">הילה</span>';
+    return '';
+  };
+
   listEl.innerHTML = sorted.map(item =>
     '<div class="packing-item ' + (item.packed ? 'packed' : '') + '">' +
     '<div class="packing-check ' + (item.packed ? 'checked' : '') + '" onclick="togglePackingItem(\'' + item.id + '\')"></div>' +
-    '<span class="packing-item-text">' + item.text.replace(/</g,'&lt;') + '</span>' +
+    '<span class="packing-item-text">' + ownerTag(item.owner) + item.text.replace(/</g,'&lt;') + '</span>' +
     '<button class="packing-delete" onclick="deletePackingItem(\'' + item.id + '\')" title="מחק">✕</button>' +
     '</div>'
   ).join('');
