@@ -648,7 +648,7 @@ function navigate(view, skipHistory) {
   if (navBtn) navBtn.classList.add('active');
   STATE.currentView = view;
   window.scrollTo(0, 0);
-  if (!skipHistory) history.pushState({ view: view }, '', '');
+  if (!skipHistory) history.pushState({ view: view }, '');
   if (view === 'home') renderHome();
   if (view === 'itinerary') {
     renderItinerary();
@@ -1413,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (status.dayIdx >= 0) STATE.selectedDay = status.dayIdx;
   renderHome();
   // Initialize history state for back button support
-  history.replaceState({ view: 'home' }, '', '');
+  history.replaceState({ view: 'home' }, '');
   window.addEventListener('popstate', function(e) {
     if (e.state && e.state.view) {
       navigate(e.state.view, true);
