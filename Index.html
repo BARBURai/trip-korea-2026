@@ -839,6 +839,10 @@ function renderHome() {
         '<div class="hero-count" id="flightCountdown" style="font-size:clamp(28px,8vw,48px);letter-spacing:2px;font-variant-numeric:tabular-nums;">--:--:--</div>' +
         '<div class="hero-sub">' + status.days + ' ימים · ' + TRIP.startDate + '</div>' +
         '</div></div>';
+      document.getElementById('homeHero').innerHTML = html;
+      updateCountdown();
+      window._cdTimer = setInterval(updateCountdown, 1000);
+      html = ''; // already written to DOM
     }
   } else if (status.status === 'during') {
     const day = TRIP.days[status.dayIdx];
@@ -1817,7 +1821,7 @@ function updatePackingBadge() {
 
 
 if ('serviceWorker' in navigator) {
-  const swCode = "const CACHE='korea-2026-v4';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.add('/')));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>clients.claim()));});self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(url.hostname.indexOf('open-meteo')>=0||url.hostname.indexOf('er-api')>=0)return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{const copy=resp.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return resp;}).catch(()=>caches.match('/'))));});";
+  const swCode = "const CACHE='korea-2026-v5';self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.add('/')));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>clients.claim()));});self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(url.hostname.indexOf('open-meteo')>=0||url.hostname.indexOf('er-api')>=0)return;e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{const copy=resp.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return resp;}).catch(()=>caches.match('/'))));});";
   const blob = new Blob([swCode], {type: 'application/javascript'});
   const swUrl = URL.createObjectURL(blob);
   navigator.serviceWorker.register(swUrl).catch(() => {});
