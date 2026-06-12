@@ -345,8 +345,9 @@ details .details-body { padding:0 14px 14px; color:var(--text-dim); font-size:13
 .notif-btn.denied { background:var(--surface-2); color:var(--text-faint); }
 .notif-btn .notif-count { position:absolute; top:-4px; right:-4px; background:var(--red); color:#fff; font-size:9px; font-weight:700; min-width:16px; height:16px; border-radius:8px; padding:0 4px; display:flex; align-items:center; justify-content:center; line-height:1; }
 
-.alert-banner { background:linear-gradient(135deg,var(--red) 0%,#DC2626 100%); color:#fff; border-radius:var(--radius); padding:14px 16px; margin-bottom:14px; position:relative; }
+.alert-banner { background:linear-gradient(135deg,var(--red) 0%,#DC2626 100%); color:#fff; border-radius:0; padding:8px 14px; margin-bottom:2px; position:relative; display:flex; align-items:center; gap:8px; font-size:13px; }
 .alert-banner.warning { background:linear-gradient(135deg,#D97706 0%,#B45309 100%); }
+.alert-banner-body { flex:1; font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .alert-banner.info { background:linear-gradient(135deg,var(--blue) 0%,#2563EB 100%); }
 .alert-banner-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; opacity:0.9; margin-bottom:4px; }
 .alert-banner-body { font-size:14px; font-weight:600; line-height:1.4; }
@@ -535,7 +536,6 @@ details summary { font-size: 16px !important; padding: 14px 16px !important; }
 </header>
 
 <section class="view active" id="view-home">
-  <div id="alertsBanner"></div>
   <div id="homeHero"></div>
   <div class="section-title">גישה מהירה</div>
   <div class="quick-grid">
@@ -638,6 +638,7 @@ details summary { font-size: 16px !important; padding: 14px 16px !important; }
   <div id="cosmeticsContent"></div>
 </section>
 
+<div id="alertsBanner" style="position:fixed;bottom:calc(64px + env(safe-area-inset-bottom));left:0;right:0;z-index:99;max-width:680px;margin:0 auto;"></div>
 <nav class="bottom-nav">
   <button class="nav-btn active" data-view="home" onclick="navigate('home')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12l9-9 9 9M5 10v10h14V10" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -818,7 +819,8 @@ function renderHome() {
     document.getElementById('headerCountdown').innerHTML = '⏳ ' + status.days + ' ימים';
     // Show countdown timer when 7 days or less
     if (status.days <= 7) {
-      const flightDate = new Date('2026-06-17T15:15:00+03:00'); // EY608 takeoff time
+      const flightDate = new Date('2026-06-17T15:15:00+03:00');
+      function pad(n) { return n < 10 ? '0'+n : n; }
       function updateCountdown() {
         const now = new Date();
         const diff = flightDate - now;
@@ -828,18 +830,13 @@ function renderHome() {
         const m = Math.floor((diff % (1000*60*60)) / (1000*60));
         const s = Math.floor((diff % (1000*60)) / 1000);
         const el = document.getElementById('flightCountdown');
-        if (el) el.innerHTML = (d > 0 ? d + 'ד ' : '') + pad(h) + ':' + pad(m) + ':' + pad(s);
+        const totalH = d * 24 + h; if (el) el.innerHTML = pad(totalH) + ':' + pad(m) + ':' + pad(s);
       }
-      function pad(n) { return n < 10 ? '0'+n : n; }
       clearInterval(window._cdTimer);
-      setTimeout(() => {
-        updateCountdown();
-        window._cdTimer = setInterval(updateCountdown, 1000);
-      }, 100);
       html = '<div class="hero"' + heroBgStyle + '><div class="hero-content">' +
         '<div class="hero-eyebrow">🇰🇷 דרום קוריאה · הילה ורון</div>' +
         '<div class="hero-title">✈️ עד הטיסה</div>' +
-        '<div class="hero-count" id="flightCountdown" style="font-size:clamp(28px,8vw,48px);letter-spacing:2px;">--:--:--</div>' +
+        '<div class="hero-count" id="flightCountdown" style="font-size:clamp(28px,8vw,48px);letter-spacing:2px;font-variant-numeric:tabular-nums;">--:--:--</div>' +
         '<div class="hero-sub">' + status.days + ' ימים · ' + TRIP.startDate + '</div>' +
         '</div></div>';
     }
@@ -1914,21 +1911,17 @@ function renderAlertsBanner() {
     </div>`;
   }
 
-  // Show top 3 alerts
-  alerts.slice(0, 3).forEach(a => {
-    const bannerClass = a.level === 'critical' ? '' : (a.level === 'warning' ? ' warning' : ' info');
-    html += `
-      <div class="alert-banner${bannerClass}">
-        <button class="alert-dismiss" onclick="dismissAlert('${a.dismissKey}','${a.deadline}')">✕</button>
-        <div class="alert-banner-title">⏰ ${a.title}</div>
-        <div class="alert-banner-body">${a.body}</div>
-        ${a.note ? `<div class="alert-banner-sub">${a.note}</div>` : ''}
-        <div class="alert-banner-action">
-          <button onclick="togglePrep(${a.index});renderAlertsBanner();updateNavBadge();">✓ בוצע</button>
-          <button onclick="navigate('prep')">פתח צ'קליסט</button>
-        </div>
-      </div>`;
-  });
+  // Show alerts as compact strip - one at a time (most urgent)
+  const a = alerts[0];
+  if (a) {
+    const bannerClass = a.level === 'critical' ? '' : ' warning';
+    html += `<div class="alert-banner${bannerClass}" onclick="navigate('prep')" style="cursor:pointer;">
+      <span style="font-size:12px;opacity:0.85;white-space:nowrap;">⏰ ${a.title}</span>
+      <span class="alert-banner-body">${a.body}</span>
+      ${alerts.length > 1 ? `<span style="font-size:11px;opacity:0.8;white-space:nowrap;">+${alerts.length-1}</span>` : ''}
+      <button class="alert-dismiss" onclick="event.stopPropagation();dismissAlert('${a.dismissKey}','${a.deadline}')" style="margin-right:0;flex-shrink:0;">✕</button>
+    </div>`;
+  }
 
   if (alerts.length > 3) {
     html += `<div class="note-box warning">+ ${alerts.length - 3} משימות נוספות - <a href="#" onclick="navigate('prep');return false;" style="color:var(--accent);">פתח צ'קליסט</a></div>`;
